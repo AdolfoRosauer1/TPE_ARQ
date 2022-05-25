@@ -15,8 +15,12 @@ GLOBAL _irq05Handler
 
 GLOBAL _exception0Handler
 
+GLOBAL _syscallHandler
+
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
+
+EXTERN syscallDispatcher
 
 SECTION .text
 
@@ -149,6 +153,15 @@ haltcpu:
 	ret
 
 
+;_syscallHandler
+_syscallHandler:
+	pushState
+
+	;mov rdi, %1  pasaje de parametro
+	call syscallDispatcher
+
+	popState
+	iretq
 
 SECTION .bss
 	aux resq 1

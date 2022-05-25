@@ -1,4 +1,5 @@
 /* sampleCodeModule.c */
+#include <system_calls.h>
 
 char * v = (char*)0xB8000 + 79 * 2;
 
@@ -13,7 +14,7 @@ int main() {
 
 	while (1)
 	{
-		/* code */
+		system_call(WRITE,0,0,0,0,0);
 	}
 	
 
