@@ -6,8 +6,6 @@ static unsigned long ticks = 0;
 
 void timer_handler() {
 	ticks++;
-	ncClear();
-	ncPrint("TimerTick");
 }
 
 int ticks_elapsed() {
