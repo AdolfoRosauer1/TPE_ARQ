@@ -40,11 +40,13 @@ SECTION .text
 %endmacro
 
 system_call:
-    enter
-    pushState
+	push rbp
+  	mov rbp, rsp
+	pushState
 
-    int 80h
+  	int 80h
 
-    popState
-    leave
-    ret
+	popState
+	mov rsp, rbp
+  	pop rbp
+  	ret
