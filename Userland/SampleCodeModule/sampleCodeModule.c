@@ -14,6 +14,7 @@ int main() {
 
 	while (1)
 	{
+		unsigned char kbd_char = system_call(READ,0,0,0,0,0);
 		system_call(WRITE,0,0,0,0,0);
 	}
 	

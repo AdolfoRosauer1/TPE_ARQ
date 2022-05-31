@@ -31,6 +31,20 @@ void ncNewline()
 	while((uint64_t)(currentVideo - video) % (width * 2) != 0);
 }
 
+void ncBackSpace()
+{
+    //Si estoy al principio de la linea (adelante del prompt)
+    uint64_t posInLine = (uint64_t)(currentVideo - video) % (uint64_t)(LINE_LENGTH);
+    if(posInLine <= PROMPT_SIZE + 1)
+        return;
+
+    currentVideo--;
+    *currentVideo = DEFAULT_COLOR;
+    currentVideo--;
+	*currentVideo = ' ';
+}
+
+
 void ncPrintDec(uint64_t value)
 {
 	ncPrintBase(value, 10);

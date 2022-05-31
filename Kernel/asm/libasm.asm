@@ -1,6 +1,22 @@
 GLOBAL cpuVendor
+GLOBAL keyPress
+GLOBAL keyboardStatus
 
 section .text
+	
+
+keyboardStatus:
+	mov rax, 0
+    in al, 64h
+    and al, 01h 
+    ret
+
+
+keyPress:
+	mov rax, 0
+    in al, 60h
+    ret
+
 	
 cpuVendor:
 	push rbp
