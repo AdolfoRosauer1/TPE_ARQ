@@ -1,7 +1,7 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 
-#define BACKSPACE 0x0E
+#define BACKSPACE '\b'
 #define SHIFT 201
 
 
