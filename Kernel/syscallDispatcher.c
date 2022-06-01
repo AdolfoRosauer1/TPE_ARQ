@@ -11,13 +11,9 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
         case WRITE:
             ncPrintChar((char)rsi);
             break;
-
         case READ:
             return get_char();
-            return kbd_dump();
             break;
-            
-
         case CLEAR:
             ncClear();
             break;    
