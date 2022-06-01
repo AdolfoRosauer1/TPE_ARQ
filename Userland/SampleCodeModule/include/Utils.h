@@ -6,6 +6,7 @@
 
 
 void putChar(char c);
+void clear();
 unsigned char getChar();
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
