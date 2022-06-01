@@ -8,16 +8,54 @@ static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static const uint32_t width = 80;
 static const uint32_t height = 25 ;
 
-void ncPrintColor( ){
+void ncScroll()
+{
+	// uint8_t* i = video;
 
+	// for ( i ; i < LAST_LINE ; i++ )
+	// {
+	// 	*i = *(i+LINE_LENGTH);
+	// }
+	// for ( i ; i < LAST_LINE+LINE_LENGTH ; i+=2 )
+	// 	*i = ' ';
+
+	int i = 0;
+
+	for ( i ; i < LAST_LINE-video ; i++ )
+	{
+		video[i] = video[i+LINE_LENGTH];
+	}
+
+	for ( i ; i < LAST_LINE+LINE_LENGTH-video ; i+=2 )
+	{
+		video[i] = ' ';
+	}
+	currentVideo -= LINE_LENGTH;
+	
+
+}
+
+void ncPrintCharColor( const char c, uint8_t color )
+{
+	if ( currentVideo == LAST_LINE )
+		ncScroll();
+
+	if ( c == '\n' )
+		ncNewline();
+	else{
+		*(currentVideo++) = c;
+		(*(currentVideo++)) = color;
+	}
+	
+	
 }
 
 void ncPrint(const char * string)
 {
 	int i;
 
-	if ( currentVideo >= video + (height*width) )
-		ncClear();
+	if ( currentVideo >= LAST_LINE )
+		ncScroll();
 
 	for (i = 0; string[i] != 0; i++)
 		ncPrintChar(string[i]);
@@ -25,8 +63,7 @@ void ncPrint(const char * string)
 
 void ncPrintChar(char character)
 {
-	*currentVideo = character;
-	currentVideo += 2;
+	ncPrintCharColor(character,DEFAULT_COLOR);
 }
 
 void ncNewline()

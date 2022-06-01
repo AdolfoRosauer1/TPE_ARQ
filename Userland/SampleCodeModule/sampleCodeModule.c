@@ -9,13 +9,11 @@ static int var2 = 0;
 
 int main() {
 	//All the following code may be removed 
-	*v = 'X';
-	*(v+1) = 0x74;
 
-	system_call(CLEAR,0,0,0,0,0);
 
 	while (1)
 	{
+		system_call(WRITE,'-',0,0,0,0);
 	}
 	
 

@@ -6,6 +6,7 @@
 #define PROMPT_SIZE 5
 #define DEFAULT_COLOR 0x0F
 #define LINE_LENGTH width*2
+#define LAST_LINE video + (width*height*2) - LINE_LENGTH
 
 
 void ncPrint(const char * string);
