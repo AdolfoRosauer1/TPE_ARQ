@@ -8,9 +8,16 @@ static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static const uint32_t width = 80;
 static const uint32_t height = 25 ;
 
+void ncPrintColor( ){
+
+}
+
 void ncPrint(const char * string)
 {
 	int i;
+
+	if ( currentVideo >= video + (height*width) )
+		ncClear();
 
 	for (i = 0; string[i] != 0; i++)
 		ncPrintChar(string[i]);
