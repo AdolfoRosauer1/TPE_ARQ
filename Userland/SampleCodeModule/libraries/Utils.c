@@ -37,9 +37,7 @@ int scan(char *buffer, int size)
             } else if(IS_ALPHA(c) || IS_DIGIT(c) || c == ' '){
                 putChar(c);
                 buffer[length++] = c;  
-            } else if(c == SHIFT){
-                sys_saveRegs();
-            }     
+            }    
         }
     }
     buffer[length] = 0;
