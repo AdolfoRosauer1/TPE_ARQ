@@ -8,6 +8,8 @@
 void putChar(char c);
 void clear();
 unsigned char getChar();
+int scan(char *buffer, int size);
+void print(char * string);
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
 #define IS_LOWER(c) ((c) >= 'a' && (c) <= 'z')
