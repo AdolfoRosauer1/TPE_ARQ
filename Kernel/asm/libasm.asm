@@ -1,7 +1,7 @@
 GLOBAL cpuVendor
 GLOBAL keyPress
 GLOBAL keyboardStatus
-GLOBAL RTC
+GLOBAL getRTC
 
 section .text
 	
@@ -56,7 +56,7 @@ cpuVendor:
 	ret
 
 
-RTC:
+getRTC:
 	cli
     mov al, 0x0B
     out 70h, al

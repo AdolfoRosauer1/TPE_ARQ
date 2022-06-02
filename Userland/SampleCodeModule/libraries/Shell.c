@@ -11,6 +11,5 @@ void start_shell()
     while (!exit)
     {
         char c = getChar();
-        putChar(c);
     }
 }

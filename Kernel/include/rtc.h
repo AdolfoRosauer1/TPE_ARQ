@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <time.h>
 
-extern uint8_t RTC(uint64_t descriptor);
+extern uint8_t getRTC(uint64_t descriptor);
 
 uint8_t getTime(uint64_t descriptor);
 
