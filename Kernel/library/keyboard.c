@@ -1,4 +1,5 @@
 #include <keyboard.h>
+#include <interrupts.h>
 
 static unsigned char buffer[MAX_SIZE];
 static unsigned int buffer_size = 0;
@@ -78,7 +79,8 @@ unsigned char get_char()
         return 0;
     }
     unsigned char toReturn = buffer[0];
+    _hlt();
     buffer_remove();
-
+    ncPrintChar(toReturn);
     return toReturn;
 }

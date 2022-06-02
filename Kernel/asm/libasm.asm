@@ -5,7 +5,7 @@ GLOBAL keyboardStatus
 section .text
 	
 
-keyboardStatus:
+keyPress:
     push rbp
     mov rbp,rsp
     
@@ -17,7 +17,7 @@ keyboardStatus:
     ret
 
 
-keyPress:
+keyboardStatus:
     push rbp
     mov rbp,rsp
 
