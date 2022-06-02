@@ -1,9 +1,14 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 
-#define BACKSPACE '\b'
-#define SHIFT 201
+//Para el rtc
+#define MINUTES 2
+#define HOURS 4
+#define DAY 7
+#define MONTH 8
+#define YEAR 9
 
+#define BACKSPACE '\b'
 
 void putChar(char c);
 void clear();

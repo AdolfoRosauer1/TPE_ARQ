@@ -65,3 +65,8 @@ int scan(char *buffer, int size)
     buffer[length] = 0;
     return length;
 }
+
+uint8_t geMinutes()
+{
+    return system_call(RTC,MINUTES,0,0,0,0);
+}

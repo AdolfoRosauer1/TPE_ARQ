@@ -19,7 +19,6 @@ GLOBAL _syscallHandler
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
-
 EXTERN syscallDispatcher
 
 SECTION .text
