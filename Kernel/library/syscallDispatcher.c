@@ -14,8 +14,7 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             break;
         case READ:
             c = get_char();
-            return c;
-            // ncPrintChar(c);
+            ncPrintChar(c);
             break;
         case CLEAR:
             ncClear();

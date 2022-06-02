@@ -6,15 +6,27 @@ section .text
 	
 
 keyboardStatus:
-	mov rax, 0
-    in al, 64h
-    and al, 01h 
+    push rbp
+    mov rbp,rsp
+    
+    xor rax, rax
+    in al,60h
+
+    mov rsp, rbp
+	pop rbp
     ret
 
 
 keyPress:
-	mov rax, 0
-    in al, 60h
+    push rbp
+    mov rbp,rsp
+
+    xor rax, rax
+    in al,64h
+    and al,0x01
+
+    mov rsp, rbp
+	pop rbp
     ret
 
 	
