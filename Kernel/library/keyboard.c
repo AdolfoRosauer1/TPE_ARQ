@@ -51,8 +51,8 @@ int keyboardHandler()
         if ( kbd_US[scancode] != 0  && buffer_size < MAX_SIZE )
         {
             buffer[buffer_size++] = kbd_US[scancode];
+            return 1;
         }
-        return 1;
     }
     return 0;
 }
@@ -72,12 +72,13 @@ void buffer_remove()
 
 unsigned char get_char()
 {
+
     if ( buffer_size <= 0 )
     {
         return 0;
     }
     unsigned char toReturn = buffer[0];
     buffer_remove();
-    ncPrintChar(toReturn);
+
     return toReturn;
 }

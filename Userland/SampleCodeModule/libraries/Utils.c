@@ -10,7 +10,9 @@ void clear()
 unsigned char getChar()
 {
     char c;
-    while ( c = system_call(READ,0,0,0,0,0) == 0 );
+    uint64_t i = 0;
+    while ( (c = system_call(READ,0,0,0,0,0)) == 0 );
+    putChar(c);
     return c;
 }
 

@@ -10,7 +10,7 @@ void start_shell()
     char buffer[MAX_SIZE] = {0};
     while (!exit)
     {
-        scan(buffer,MAX_SIZE);
-        putChar('\n');
+        char c = getChar();
+        putChar(c);
     }
 }
