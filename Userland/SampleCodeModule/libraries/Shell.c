@@ -12,5 +12,10 @@ void start_shell()
     {
         print(">> ");
         scanf(buffer,MAX_SIZE);
+        if ( strcmp("exit",buffer) == 0 )
+        {
+            exit = 1;
+        }
+        
     }
 }

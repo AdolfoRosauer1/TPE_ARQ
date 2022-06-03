@@ -57,7 +57,7 @@ void keyboardHandler()
             }
             else if (scancode == SHIFT_PRESS)
             {
-                mayus=1;
+                shift=1;
             }
             
             if ( buffer_size < MAX_SIZE)

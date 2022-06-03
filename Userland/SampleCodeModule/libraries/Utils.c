@@ -9,7 +9,7 @@ void clear()
 unsigned char getChar()
 {
     char c;    
-    while ( (system_call(READ,STD_IN,&c,1,0,0)) == 0 );
+    while ( (system_call(POLL_READ,STD_IN,&c,1,5000,0)) == 0 );
     return c;
 }
 
@@ -41,7 +41,6 @@ void scanf(char *buffer, int size)
 
         if ( c == '\n' )
         {
-            buffer[count++] = c;
             buffer[count] = 0;
             putChar(c);
             return;
@@ -69,17 +68,18 @@ int strlen( char * string )
     return i;
 }
 
-int strcmp( char * str1, char * str2 )
-{
-    int len1 = strlen(str1);
-    int len2 = strlen(str2);
-
-    int offset = 0;
-
-    for ( int i = 0 ; i < len1 && i < len2 ; i++ )
-    {
-        if ( str1[i] != str2[i] )
-            offset++;
+int strcmp(char string1[], char string2[]){
+    int i = 0;
+    while(string1[i]!=0 && string2[i]!=0){
+        if(string1[i] < string2[i])
+            return -1;
+        if(string1[i] > string2[i])
+            return 1;
+        i++;
     }
-    return offset;
+    if(string1[i]==0 && string2[i]==0)
+        return 0;
+    if(string1[i]!=0 && string2[i]==0)
+        return 1;
+    return -1;
 }
