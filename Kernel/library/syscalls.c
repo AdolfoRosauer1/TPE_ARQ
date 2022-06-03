@@ -12,7 +12,7 @@ uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)
         do
         {
             _hlt();
-            read += (fd == STD_IN)? get_chars(buf+read,count-read):get_scancodes((uint8_t*)buf,count);
+            read += (fd == STD_IN)? get_chars(buf+read,count-read):get_scancodes((uint8_t*)buf+read,count-read);
         }while ( read == 0 && (milis_elapsed() - start) < timeout );
     }
 

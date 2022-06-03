@@ -42,21 +42,40 @@ void keyboardHandler()
 // se fija CTRL PRESS
 // lo guarda
 // no guarda CTRL RELEASE
+    while (keyboardStatus())
+    {
         scancode = keyPress();
         action = getAction(scancode);
-        if (action == PRESS)
-        {
+        if(action == PRESS){
             if ( scancode == CTRL_PRESS )
-                // saveregs
-            if ( buffer_size < MAX_SIZE )
+            {
+                
+            }
+            else if (scancode == MAYUS)
+            {
+                mayus=!mayus;
+            }
+            else if (scancode == SHIFT_PRESS)
+            {
+                mayus=1;
+            }
+            
+            if ( buffer_size < MAX_SIZE)
             {
                 buffer[buffer_size++] = scancode;
+                return;
             }
         }
         else if (action == RELEASE)
         {
-            /* code */
-        }  
+            if (scancode == SHIFT_RELEASE)
+            {
+                shift = 0;
+            }
+            
+        }
+        
+    }
     return;
 }
 

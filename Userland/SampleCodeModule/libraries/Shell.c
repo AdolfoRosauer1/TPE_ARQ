@@ -10,8 +10,7 @@ void start_shell()
     char buffer[MAX_SIZE] = {0};
     while (!exit)
     {
+        print(">> ");
         scanf(buffer,MAX_SIZE);
-        if ( strcmp(buffer,'exit') == 0 )
-            exit=1;
     }
 }

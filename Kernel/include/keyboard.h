@@ -6,6 +6,10 @@
 
 #define BACKSPACE 0x0E
 #define CTRL_PRESS 0x1D
+#define CTRL_RELEASE 0x9D
+#define MAYUS 0x3A
+#define SHIFT_PRESS 0x2A
+#define SHIFT_RELEASE 0xAA
 
 #define MAX_SIZE 30
 

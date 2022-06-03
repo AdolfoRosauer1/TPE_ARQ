@@ -10,15 +10,6 @@ static const uint32_t height = 25 ;
 
 void ncScroll()
 {
-	// uint8_t* i = video;
-
-	// for ( i ; i < LAST_LINE ; i++ )
-	// {
-	// 	*i = *(i+LINE_LENGTH);
-	// }
-	// for ( i ; i < LAST_LINE+LINE_LENGTH ; i+=2 )
-	// 	*i = ' ';
-
 	int i = 0;
 
 	for ( i ; i < LAST_LINE-video ; i++ )
@@ -32,7 +23,6 @@ void ncScroll()
 	}
 	currentVideo -= LINE_LENGTH;
 	
-
 }
 
 void ncPrintCharColor( const char c, uint8_t color )
@@ -42,11 +32,13 @@ void ncPrintCharColor( const char c, uint8_t color )
 
 	if ( c == '\n' )
 		ncNewline();
-	if ( c == '\b' )
+	else if ( c == '\b' )
 		ncBackSpace();
 	else{
-		*(currentVideo++) = c;
-		(*(currentVideo++)) = color;
+		*(currentVideo) = c;
+		currentVideo++;
+		*(currentVideo) = color;
+		currentVideo++;
 	}
 	
 	
@@ -79,7 +71,6 @@ void ncNewline()
 
 void ncBackSpace()
 {
-    //Si estoy al principio de la linea (adelante del prompt)
     uint64_t posInLine = (uint64_t)(currentVideo - video) % (uint64_t)(LINE_LENGTH);
     if(posInLine <= PROMPT_SIZE + 1)
         return;

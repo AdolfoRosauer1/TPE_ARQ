@@ -8,16 +8,15 @@
 
 
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9) {
-    char c;
     switch (rdi) {
         case WRITE:
             ncPrintChar((char)rsi);
             break;
         case READ:
-            return pollread(rsi,(char*)rdx,rcx,0xFFFF);
+            return pollread(rsi,rdx,rcx,0xFFFF);
             break;
         case POLL_READ:
-            return pollread(rsi,(char*)rdx,rcx,r8);
+            return pollread(rsi,rdx,rcx,r8);
             break;
         case CLEAR:
             ncClear();

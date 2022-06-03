@@ -9,7 +9,7 @@ void clear()
 unsigned char getChar()
 {
     char c;    
-    while ( (system_call(POLL_READ,STD_IN,&c,1,200,0)) == 0 );
+    while ( (system_call(READ,STD_IN,&c,1,0,0)) == 0 );
     return c;
 }
 
@@ -43,6 +43,7 @@ void scanf(char *buffer, int size)
         {
             buffer[count++] = c;
             buffer[count] = 0;
+            putChar(c);
             return;
         }else
         {
