@@ -113,7 +113,8 @@ unsigned int get_chars(uint8_t* buf, unsigned int buf_size, unsigned int count)
         }
     }
 
-    buffer_remove(index);
+    buffer_size -= index;
+    memcpy(buffer,buffer+index,buffer_size);
 
     _sti();
     return read;
@@ -127,7 +128,8 @@ unsigned int get_scancodes(uint8_t* buf, unsigned int count)
         count = buffer_size;
     }
     memcpy(buf,buffer,count);
-    buffer_remove(count);
+    buffer_size -= count;
+    memcpy(buffer,buffer + count, buffer_size);
     _sti();
     return count;
 }

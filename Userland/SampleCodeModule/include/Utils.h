@@ -11,7 +11,7 @@
 
 #define BACKSPACE '\b'
 
-#define STD_IN 1
+#define STD_IN 0
 
 void putChar(char c);
 void clear();
