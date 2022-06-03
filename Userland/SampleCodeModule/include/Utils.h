@@ -1,5 +1,6 @@
 #ifndef _UTILS_H
 #define _UTILS_H
+#include <system_calls.h>
 
 //Para el rtc
 #define MINUTES 2
@@ -10,10 +11,12 @@
 
 #define BACKSPACE '\b'
 
+#define STD_IN 1
+
 void putChar(char c);
 void clear();
 unsigned char getChar();
-int scan(char *buffer, int size);
+void scan(char *buffer, int size);
 void print(char * string);
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')

@@ -42,6 +42,8 @@ void ncPrintCharColor( const char c, uint8_t color )
 
 	if ( c == '\n' )
 		ncNewline();
+	if ( c == '\b' )
+		ncBackSpace();
 	else{
 		*(currentVideo++) = c;
 		(*(currentVideo++)) = color;

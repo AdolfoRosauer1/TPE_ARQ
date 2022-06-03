@@ -14,14 +14,19 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             ncPrintChar((char)rsi);
             break;
         case READ:
-            c = get_char();
-            return c;
+            return pollread(rsi,(char*)rdx,rcx,0xFFFF);
+            break;
+        case POLL_READ:
+            return pollread(rsi,(char*)rdx,rcx,r8);
             break;
         case CLEAR:
             ncClear();
             break; 
         case RTC:
             getTime(rsi);
+            break;   
+        case SYS_BACKSPACE:
+            ncBackSpace();
             break;    
         default:
             break;

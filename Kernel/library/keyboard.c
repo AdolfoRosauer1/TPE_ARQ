@@ -1,8 +1,11 @@
 #include <keyboard.h>
 #include <interrupts.h>
 
-static unsigned char buffer[MAX_SIZE];
+static uint8_t buffer[MAX_SIZE];
 static unsigned int buffer_size = 0;
+
+static unsigned int mayus = 0;
+static unsigned int shift = 0;
 
 //https://www.qbasic.net/en/reference/general/scan-codes.htm
 static char kbd_US[58][2] = {{0, 0}, {0, 0}, {'1', '!'}, {'2', '@'}, 
@@ -35,17 +38,21 @@ int keyboardHandler()
 {
     uint8_t scancode = 0;
     uint8_t action;
+
+// se fija CTRL PRESS
+// lo guarda
+// no guarda CTRL RELEASE
     while( keyboardStatus )
     {
         scancode = keyPress();
         action = getAction(scancode);
         if (action == PRESS)
         {
-            if ( scancode == BACKSPACE )
-                ncBackSpace();
-            if ( kbd_US[scancode][0] != 0  && buffer_size < MAX_SIZE )
+            if ( scancode == CTRL_PRESS )
+                // saveregs
+            if ( buffer_size < MAX_SIZE )
             {
-                buffer[buffer_size++] = kbd_US[scancode][0];
+                buffer[buffer_size++] = scancode;
                 return 1;
             }
         }
@@ -58,29 +65,69 @@ int keyboardHandler()
     return 0;
 }
 
-void buffer_remove()
+void buffer_remove(int length)
 {
+    int count=0;
     if ( buffer_size > 0 )
     {
-      for ( int i = 1 ; i < buffer_size ; i++ )
+      for ( int i = 1 ; i < buffer_size && i < length ; i++ )
       {
         buffer[i-1] = buffer[i];
+        count++;
       }
     }
-    buffer_size--;
+    buffer_size-=count;
     return;
 }
 
-unsigned char get_char()
-{
 
-    if ( buffer_size <= 0 )
+char scancode_Ascii( uint8_t scancode )
+{
+    int state;
+    if ( IS_ALPHA(kbd_US[scancode][0]) )
+        state = (mayus||shift)? 1:0;
+    else
+        state = shift;
+    
+    return (scancode < 58)? (kbd_US[scancode][state]):0;
+}
+
+
+unsigned int get_chars(uint8_t* buf, unsigned int buf_size, unsigned int count)
+{
+    _cli();
+
+    unsigned int read = 0;
+    unsigned int index = 0;
+
+    if ( buf_size < count )
+        count = buf_size;
+
+    for ( index ; index < buffer_size && read < count ; index++ )
     {
-        return 0;
+        uint8_t scancode = buffer[index];
+        char c = scancode_Ascii(scancode);
+        if ( c != 0  )
+        {
+            buf[read++] = c;
+        }
     }
-    unsigned char toReturn = buffer[0];
-    _hlt();
-    buffer_remove();
-    ncPrintChar(toReturn);
-    return toReturn;
+
+    buffer_remove(index);
+
+    _sti();
+    return read;
+}
+
+unsigned int get_scancodes(uint8_t* buf, unsigned int count)
+{
+    _cli();
+    if (buffer_size < count)
+    {
+        count = buffer_size;
+    }
+    memcpy(buf,buffer,count);
+    buffer_remove(count);
+    _sti();
+    return count;
 }

@@ -1,5 +1,4 @@
 // aca va a ir printf putchar etc
-#include <system_calls.h>
 #include <Utils.h>
 
 void clear()
@@ -9,10 +8,8 @@ void clear()
 
 unsigned char getChar()
 {
-    char c;
-    uint64_t i = 0;
-    while ( (c = system_call(READ,0,0,0,0,0)) == 0 );
-    putChar(c);
+    char c;    
+    while ( (system_call(POLL_READ,STD_IN,&c,1,200,0)) == 0 );
     return c;
 }
 
@@ -31,39 +28,29 @@ void print(char * string)
     }    
 }
 
-int scan(char *buffer, int size)
+void scanf(char *buffer, int size)
 {
-    unsigned char c;
-    int length=0;
-    while((c = getChar()) != '\n' && length < size)
+    if ( size == 0 )
+        return 1;
+        
+    uint64_t count = 0;
+
+    do
     {
-        if(c == BACKSPACE)
+        char c = getChar();
+
+        if ( c == '\n' )
         {
-            if(length > 0)
-                buffer[length--] = 0;
-        } else if(IS_ALPHA(c) || IS_DIGIT(c) || c == ' ')
+            buffer[count++] = c;
+            buffer[count] = 0;
+            return;
+        }else
         {
-            putChar(c);
-            buffer[length++] = c;  
-        }   
-    }
-    while(buffer[length-1] == ' ')
-    {
-        while((c = getChar()) != '\n' && length < size)
-        {
-            if(c == BACKSPACE)
-            {
-                if(length > 0)
-                    buffer[length--] = 0;
-            } else if(IS_ALPHA(c) || IS_DIGIT(c) || c == ' ')
-            {
-                putChar(c);
-                buffer[length++] = c;  
-            }    
+            if ( count < size-1 )
+                buffer[count++] = c;
         }
-    }
-    buffer[length] = 0;
-    return length;
+        putChar(c);
+    } while (1);
 }
 
 uint8_t geMinutes()
