@@ -11,5 +11,7 @@ void start_shell()
     while (!exit)
     {
         scanf(buffer,MAX_SIZE);
+        if ( strcmp(buffer,'exit') == 0 )
+            exit=1;
     }
 }

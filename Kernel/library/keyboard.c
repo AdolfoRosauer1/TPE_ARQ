@@ -1,7 +1,7 @@
 #include <keyboard.h>
 #include <interrupts.h>
 
-static uint8_t buffer[MAX_SIZE];
+static uint8_t buffer[MAX_SIZE] = {0};
 static unsigned int buffer_size = 0;
 
 static unsigned int mayus = 0;

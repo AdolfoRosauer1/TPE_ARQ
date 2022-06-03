@@ -57,3 +57,28 @@ uint8_t geMinutes()
 {
     return system_call(RTC,MINUTES,0,0,0,0);
 }
+
+int strlen( char * string )
+{
+    int_fast32_t i = 0;
+    while ( string[i] != 0 )
+    {
+        i++;
+    }
+    return i;
+}
+
+int strcmp( char * str1, char * str2 )
+{
+    int len1 = strlen(str1);
+    int len2 = strlen(str2);
+
+    int offset = 0;
+
+    for ( int i = 0 ; i < len1 && i < len2 ; i++ )
+    {
+        if ( str1[i] != str2[i] )
+            offset++;
+    }
+    return offset;
+}
