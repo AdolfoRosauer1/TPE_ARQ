@@ -12,7 +12,7 @@
 extern unsigned char keyPress();
 extern int keyboardStatus();
 char scancode_Ascii( uint8_t scancode );
-int keyboardHandler();
+void keyboardHandler();
 unsigned int get_scancodes(uint8_t* buf, unsigned int count);
 unsigned int get_chars();
 

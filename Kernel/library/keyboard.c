@@ -34,7 +34,7 @@ uint8_t getAction(uint8_t scancode)
     return ERROR;
 }
 
-int keyboardHandler()
+void keyboardHandler()
 {
     uint8_t scancode = 0;
     uint8_t action;
@@ -42,8 +42,6 @@ int keyboardHandler()
 // se fija CTRL PRESS
 // lo guarda
 // no guarda CTRL RELEASE
-    while( keyboardStatus )
-    {
         scancode = keyPress();
         action = getAction(scancode);
         if (action == PRESS)
@@ -53,16 +51,13 @@ int keyboardHandler()
             if ( buffer_size < MAX_SIZE )
             {
                 buffer[buffer_size++] = scancode;
-                return 1;
             }
         }
         else if (action == RELEASE)
         {
             /* code */
-        }
-        
-    }
-    return 0;
+        }  
+    return;
 }
 
 void buffer_remove(int length)
