@@ -6,7 +6,6 @@
 #define CLEAR 3
 #define RTC 4
 #define POLL_READ 5
-#define WRITE_POS 6
 
 
 

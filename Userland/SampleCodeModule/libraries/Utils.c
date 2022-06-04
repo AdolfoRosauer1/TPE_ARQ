@@ -1,29 +1,29 @@
 // aca va a ir printf putchar etc
 #include <Utils.h>
 
-void clear(int sc)
+void clear()
 {
-    system_call(CLEAR,sc,0,0,0,0);
+    system_call(CLEAR,0,0,0,0,0);
 }
 
 unsigned char getChar()
 {
     char c;    
-    while ( (system_call(POLL_READ,STD_IN,&c,1,20000,0)) == 0 );
+    while ( (system_call(POLL_READ,STD_IN,&c,1,5000,0)) == 0 );
     return c;
 }
 
-void putChar(int sc, char c)
+void putChar(char c)
 {
     if(c != 0)
-        system_call(WRITE,sc,c,0,0,0);
+        system_call(WRITE,c,0,0,0,0);
 }
 
-void print(int sc, char * string)
+void print(char * string)
 {
     while (*string != 0)
     {
-        putChar(sc,*string);
+        putChar(*string);
         string++;
     }    
 }
@@ -42,18 +42,18 @@ void scanf(char *buffer, int size)
         if ( c == '\n' )
         {
             buffer[count] = 0;
-            putChar(0,c);
+            putChar(c);
             return;
         }else
         {
             if ( count < size-1 )
                 buffer[count++] = c;
         }
-        putChar(0,c);
+        putChar(c);
     } while (1);
 }
 
-uint8_t getMinutes()
+uint8_t geMinutes()
 {
     return system_call(RTC,MINUTES,0,0,0,0);
 }

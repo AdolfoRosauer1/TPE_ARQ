@@ -13,7 +13,7 @@
 #define CLEAR 3
 #define RTC 4
 #define POLL_READ 5
-#define WRITE_POS 6
+#define SYS_BACKSPACE 6
 
 uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout);
 

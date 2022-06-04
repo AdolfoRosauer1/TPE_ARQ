@@ -36,73 +36,71 @@ void * getStackBase()
 
 void * initializeKernelBinary()
 {
-	ncStart();
-
 	char buffer[10];
 
-	ncPrint(0,"[x64BareBones]");
-	ncNewline(0);
+	ncPrint("[x64BareBones]");
+	ncNewline();
 
-	ncPrint(0,"CPU Vendor:");
-	ncPrint(0,cpuVendor(buffer));
-	ncNewline(0);
+	ncPrint("CPU Vendor:");
+	ncPrint(cpuVendor(buffer));
+	ncNewline();
 
-	ncPrint(0,"[Loading modules]");
-	ncNewline(0);
+	ncPrint("[Loading modules]");
+	ncNewline();
 	void * moduleAddresses[] = {
 		sampleCodeModuleAddress,
 		sampleDataModuleAddress
 	};
 
 	loadModules(&endOfKernelBinary, moduleAddresses);
-	ncPrint(0,"[Done]");
-	ncNewline(0);
-	ncNewline(0);
+	ncPrint("[Done]");
+	ncNewline();
+	ncNewline();
 
-	ncPrint(0,"[Initializing kernel's binary]");
-	ncNewline(0);
+	ncPrint("[Initializing kernel's binary]");
+	ncNewline();
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
-	ncPrint(0,"  text: 0x");
+	ncPrint("  text: 0x");
 	ncPrintHex((uint64_t)&text);
-	ncNewline(0);
-	ncPrint(0,"  rodata: 0x");
+	ncNewline();
+	ncPrint("  rodata: 0x");
 	ncPrintHex((uint64_t)&rodata);
-	ncNewline(0);
-	ncPrint(0,"  data: 0x");
+	ncNewline();
+	ncPrint("  data: 0x");
 	ncPrintHex((uint64_t)&data);
-	ncNewline(0);
-	ncPrint(0,"  bss: 0x");
+	ncNewline();
+	ncPrint("  bss: 0x");
 	ncPrintHex((uint64_t)&bss);
-	ncNewline(0);
+	ncNewline();
 
-	ncPrint(0,"[Done]");
-	ncNewline(0);
-	ncNewline(0);
+	ncPrint("[Done]");
+	ncNewline();
+	ncNewline();
 	return getStackBase();
 }
 
 int main()
 {	
 	load_idt();
-	ncPrint(0,"[Kernel Main]");
-	ncNewline(0);
-	ncPrint(0,"  Sample code module at 0x");
+	ncPrint("[Kernel Main]");
+	ncNewline();
+	ncPrint("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
-	ncNewline(0);
-	ncPrint(0,"  Calling the sample code module returned: ");
+	ncNewline();
+	ncPrint("  Calling the sample code module returned: ");
 	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	ncNewline(0);
-	ncNewline(0);
+	ncNewline();
+	ncNewline();
 
-	ncPrint(0,"  Sample data module at 0x");
+	ncPrint("  Sample data module at 0x");
 	ncPrintHex((uint64_t)sampleDataModuleAddress);
-	ncNewline(0);
-	ncPrint(0,"  Sample data module contents: ");
-	ncPrint(0,(char*)sampleDataModuleAddress);
-	ncNewline(0);
+	ncNewline();
+	ncPrint("  Sample data module contents: ");
+	ncPrint((char*)sampleDataModuleAddress);
+	ncNewline();
 
-	ncPrint(0,"[Finished]");
+	ncPrint("[Finished]");
 	return 0;
 }
