@@ -6,9 +6,55 @@ static char buffer[64] = { '0' };
 static uint8_t * const video = (uint8_t*)0xB8000;
 static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static const uint32_t width = 80;
-static const uint32_t height = 25 ;
+static const uint32_t height = 25;
 
-void ncScroll()
+static screen screens[3];
+
+
+uint32_t line_length( int sc )
+{
+	return screens[sc].width*2 + screens[sc].offset;
+}
+
+uint32_t last_line( int sc )
+{
+	return video + (width*height*2) - LINE_LENGTH + screens[sc].offset;
+}
+
+void advance_screen( screen sc )
+{
+
+}
+
+void ncStart()
+{ //to be called in kernel
+
+	// screens[0] to be full screen
+	// screens[1] left ||| screens[2] right
+
+	screens[0].width = 80;
+	screens[0].height = height;
+	screens[0].start = video;
+	screens[0].current = screens[0].start;
+	screens[0].offset = 0;
+
+	screens[1].width = 39;
+	screens[1].height = height;
+	screens[1].start = video;
+	screens[1].current = screens[1].start;
+	screens[1].offset = 0;
+
+
+	screens[2].width = 39; //39 por la divide line
+	screens[2].height = height;
+	screens[2].start = video;
+	screens[2].current = screens[2].start;
+	screens[2].offset = screens[2].width * 2 + 4; //+4 por la divide line
+
+}
+
+
+void ncScroll(int sc)
 {
 	int i = 0;
 
@@ -25,60 +71,63 @@ void ncScroll()
 	
 }
 
-void ncPrintCharColor( const char c, uint8_t color )
+void ncPrintCharColor( int sc, const char c, uint8_t color )
 {
-	if ( currentVideo == LAST_LINE )
-		ncScroll();
+	if ( screens[sc].current == last_line(sc) )
+		ncScroll(sc);
 
 	if ( c == '\n' )
-		ncNewline();
+		ncNewline(sc);
 	else if ( c == '\b' )
-		ncBackSpace();
+		ncBackSpace(sc);
 	else{
-		*(currentVideo) = c;
-		currentVideo++;
-		*(currentVideo) = color;
-		currentVideo++;
+		*(screens[sc].current++) = c;
+		*(screens[sc].current++) = color;
 	}
 	
 	
 }
 
-void ncPrint(const char * string)
+
+void ncPrintCharPos(char c, uint8_t pos)
+{
+	video[pos*2] = c;
+	video[(pos*2)+1] = DEFAULT_COLOR;
+}
+
+void ncPrint(int sc, const char * string)
 {
 	int i;
 
-	if ( currentVideo >= LAST_LINE )
-		ncScroll();
+	if ( screens[sc].current >= last_line(sc) )
+		ncScroll(sc);
 
 	for (i = 0; string[i] != 0; i++)
-		ncPrintChar(string[i]);
+		ncPrintChar(sc,string[i]);
 }
 
-void ncPrintChar(char character)
+void ncPrintChar(int sc,char character)
 {
-	ncPrintCharColor(character,DEFAULT_COLOR);
+	ncPrintCharColor(sc,character,DEFAULT_COLOR);
 }
 
-void ncNewline()
+void ncNewline(int sc)
 {
 	do
 	{
-		ncPrintChar(' ');
+		ncPrintChar(sc,' ');
 	}
-	while((uint64_t)(currentVideo - video) % (width * 2) != 0);
+	while((uint64_t)(screens[sc].current - video) % (line_length(sc)) != 0); //en duda
 }
 
-void ncBackSpace()
+void ncBackSpace(int sc)
 {
-    uint64_t posInLine = (uint64_t)(currentVideo - video) % (uint64_t)(LINE_LENGTH);
-    if(posInLine <= PROMPT_SIZE + 1)
+    uint64_t posInLine = (uint64_t)(screens[sc].current - video) % (line_length(sc));
+    if(posInLine <= PROMPT_SIZE + screens[sc].offset + 1)
         return;
 
-    currentVideo--;
-    *currentVideo = DEFAULT_COLOR;
-    currentVideo--;
-	*currentVideo = ' ';
+    *(--screens[sc].current) = DEFAULT_COLOR;
+	*(--screens[sc].current) = ' ';
 }
 
 
@@ -99,17 +148,21 @@ void ncPrintBin(uint64_t value)
 
 void ncPrintBase(uint64_t value, uint32_t base)
 {
-    uintToBase(value, buffer, base);
-    ncPrint(buffer);
+    // uintToBase(value, buffer, base);
+    // ncPrint(buffer);
 }
 
-void ncClear()
+void ncClear( int sc )
 {
 	int i;
 
-	for (i = 0; i < height * width; i++)
-		video[i * 2] = ' ';
-	currentVideo = video;
+	for (i = 0; i < height * width ; i++)
+		{
+			video[(i * 2) + screens[sc].offset ] = ' ';
+			if ( i % (line_length(sc)) == 0 ) //i es un index pre la siguiente pantalla --> i+=line_length(sc)
+				i+= line_length(sc);
+		}
+	screens[sc].current = screens[sc].start;
 }
 
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base)
@@ -144,3 +197,6 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base)
 
 	return digits;
 }
+
+
+// ---- SPLIT SCREEN FUNCTIONALITY FUNCTIONS ------

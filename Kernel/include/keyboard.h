@@ -1,4 +1,5 @@
 #include <naiveConsole.h>
+#include <lib.h>
 
 #define PRESS 1
 #define RELEASE 2

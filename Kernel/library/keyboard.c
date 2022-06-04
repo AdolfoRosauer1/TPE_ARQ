@@ -42,8 +42,6 @@ void keyboardHandler()
 // se fija CTRL PRESS
 // lo guarda
 // no guarda CTRL RELEASE
-    while (keyboardStatus())
-    {
         scancode = keyPress();
         action = getAction(scancode);
         if(action == PRESS){
@@ -60,11 +58,7 @@ void keyboardHandler()
                 shift=1;
             }
             
-            if ( buffer_size < MAX_SIZE)
-            {
-                buffer[buffer_size++] = scancode;
-                return;
-            }
+            
         }
         else if (action == RELEASE)
         {
@@ -74,24 +68,27 @@ void keyboardHandler()
             }
             
         }
+        if ( buffer_size < MAX_SIZE && scancode != CTRL_RELEASE )
+            {
+                buffer[buffer_size++] = scancode;
+                return;
+            }
         
-    }
     return;
 }
 
 void buffer_remove(int length)
 {
-    int count=0;
-    if ( buffer_size > 0 )
+    if ( length > buffer_size )
+        length = buffer_size;
+    for ( int i = 0 ; i < length ; i ++ )
     {
-      for ( int i = 1 ; i < buffer_size && i < length ; i++ )
-      {
-        buffer[i-1] = buffer[i];
-        count++;
-      }
+        for( int j = 1 ; j < buffer_size ; j++ )
+        {
+            buffer[j-1] = buffer[j];
+        }
+        buffer_size--;
     }
-    buffer_size-=count;
-    return;
 }
 
 
@@ -127,8 +124,10 @@ unsigned int get_chars(uint8_t* buf, unsigned int buf_size, unsigned int count)
         }
     }
 
-    buffer_size -= index;
-    memcpy(buffer,buffer+index,buffer_size);
+    buffer_remove(index);
+
+    // buffer_size -= index;
+    // memcpy(buffer,buffer+index,buffer_size);
 
     _sti();
     return read;
