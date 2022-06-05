@@ -22,7 +22,7 @@ static uint64_t lastPrimo;
 }
 */
 
-bool esprimo(int n){
+bool es_primo(int n){
     int cantdediv = 0;
     for(int i=1; i<n+1; i++){
         if (n%i==0){
@@ -41,14 +41,14 @@ void resetPrimo(){
     lastPrimo=1;
 }
 
-int Primonext(){
+int primo_next(){
     if (lastPrimo==1){
         lastPrimo++;
         return lastPrimo;
     }
     
     lastPrimo++;
-    while (esprimo(lastPrimo)==false){
+    while (es_primo(lastPrimo)==false){
         lastPrimo++;
     }
     return lastPrimo;

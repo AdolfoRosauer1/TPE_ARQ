@@ -2,9 +2,8 @@
 
 extern void reset();
 
-static initialState initS;
 
-void exceptionDispatcher(int exception, uint64_t *registers) 
+void exceptionDispatcher(int exception) 
 {
 	switch(exception){
 		case ZERO_EXCEPTION_ID:

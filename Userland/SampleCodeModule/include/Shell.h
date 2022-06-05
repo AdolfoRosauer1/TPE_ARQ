@@ -5,9 +5,11 @@
 
 #define MAX_SIZE 50
 
+extern void InvOpCodeExc();
+
 void start_shell();
 void printTime();
 void getRegInfo();
-void help();
+void printHelp();
 
 #endif

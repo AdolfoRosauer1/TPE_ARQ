@@ -10,7 +10,7 @@
 #define SP_INDEX 18
 
 extern void saveRegisterInfo();
-void exceptionDispatcher(int exception, uint64_t *registers);
+void exceptionDispatcher(int exception);
 void zeroDivision();
 void invalidOpcode();
 

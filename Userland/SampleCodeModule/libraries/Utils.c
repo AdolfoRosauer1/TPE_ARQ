@@ -106,6 +106,71 @@ int strcmp(char string1[], char string2[])
     return -1;
 }
 
+void strcpy( char * target, char * source, int len )
+{
+    //strcpy requires for target to have enough allocated memory
+    for ( int i = 0 ; source[i] != 0 && i < len ; i++ )
+    {
+        target[i] = source[i];
+    }
+}
+
+void divide_string(char target[MAX_WORDS][MAX_LENGTH], char * string )
+{
+    int start = 0;
+    int k = 0;
+
+    for ( int i = 0 ; string[i] != 0 ; i++ )
+    {
+        if ( string[i] == ' ' )
+        {
+            int len = i - start;
+            if ( len > 0 && len <= MAX_LENGTH && k < MAX_WORDS )
+            {
+                strcpy(target[k++],string+i,len);
+            }else {print("Invalid command arguments"); putChar('\n'); return;}
+            start = i+1;
+        }
+    }
+
+    for ( k ; k < MAX_WORDS ; k++ )
+        target[k][0]=0;
+
+    return;
+
+}
+
+// void getCommand(char command[READBUF_LENGTH], char parameters[MAX_PARAMETERS][LENGTH_PARAMETERS], char readbuf[READBUF_LENGTH]) {
+//     int i, j, k;
+
+//     for(i=0, j=0; i<READBUF_LENGTH && readbuf[i]!=' '; i++){
+//             command[j++] = readbuf[i];
+//     }
+
+//     command[j] = 0;
+
+//     while(i<READBUF_LENGTH && readbuf[i]==' '){
+//         i++;
+//     }
+
+//     for(j=0, k=0; i<READBUF_LENGTH;) {
+//         if(k>=MAX_PARAMETERS || j>=LENGTH_PARAMETERS)
+//             return;
+//         if(readbuf[i]!=' ') {
+//             parameters[k][j++] = readbuf[i++];
+//         }
+//         else {
+//             parameters[k][j] = 0;
+//             k++;
+//             j=0;
+//             while(i<READBUF_LENGTH && readbuf[i]==' '){
+//                 i++;
+//             }
+//         }
+//     }
+// }
+
+
 void putCharMulti( int sc, const char c )
 {
     if ( c != 0 )

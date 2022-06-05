@@ -24,12 +24,12 @@ void stopFibo(){
 }
 */
 
-void StartFibo(){
+void start_fibo(){
     lastFibo1=1;
     lastFibo2=0;
 }
 
-uint64_t Fibonext(){
+uint64_t fibo_next(){
     if(lastFibo2 < lastFibo1){
         lastFibo2 += lastFibo1;
         return lastFibo2;
