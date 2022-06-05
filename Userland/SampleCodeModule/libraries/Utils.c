@@ -9,7 +9,7 @@ void clear()
 unsigned char getChar()
 {
     char c;    
-    while ( (system_call(POLL_READ,STD_IN,&c,1,5000,0)) == 0 );
+    while ( (system_call(READ,STD_IN,&c,1,0,0)) == 0 );
     return c;
 }
 
@@ -17,6 +17,17 @@ void putChar(char c)
 {
     if(c != 0)
         system_call(WRITE,c,0,0,0,0);
+}
+
+void putDec(int num)
+{
+    int digits = 1;
+    for (int i = num/10; i != 0; digits++,i/=10);
+    if (digits == 1)
+    {
+        putChar('0');
+    }
+    system_call(WRITE,num,1,0,0,0);
 }
 
 void print(char * string)
@@ -44,7 +55,7 @@ void scanf(char *buffer, int size)
             buffer[count] = 0;
             putChar(c);
             return;
-        }else
+        }else if (c != '\b')
         {
             if ( count < size-1 )
                 buffer[count++] = c;
@@ -53,9 +64,9 @@ void scanf(char *buffer, int size)
     } while (1);
 }
 
-uint8_t geMinutes()
+uint8_t getTime(int descriptor)
 {
-    return system_call(RTC,MINUTES,0,0,0,0);
+    return system_call(RTC,descriptor,0,0,0,0);
 }
 
 int strlen( char * string )
@@ -68,7 +79,8 @@ int strlen( char * string )
     return i;
 }
 
-int strcmp(char string1[], char string2[]){
+int strcmp(char string1[], char string2[])
+{
     int i = 0;
     while(string1[i]!=0 && string2[i]!=0){
         if(string1[i] < string2[i])
@@ -83,3 +95,4 @@ int strcmp(char string1[], char string2[]){
         return 1;
     return -1;
 }
+
