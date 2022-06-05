@@ -80,8 +80,6 @@ void printTime()
     putDec(getTime(YEAR));
     putChar('\n');
 }
-<<<<<<< HEAD
-=======
 
 void printHelp(){
     char *stringout = "In the following list are listed all the comands that you can use \n";
@@ -107,4 +105,3 @@ void printHelp(){
     print("com1 | com2 -- the use of this | caracter divides the screen by half and executes each comand on a part of the screen.\n");
     print("\n");
 }
->>>>>>> 233da61ecbe5ef79fdec07c71545e419a0e3ae7e
