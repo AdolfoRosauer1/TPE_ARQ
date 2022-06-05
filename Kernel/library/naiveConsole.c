@@ -156,7 +156,7 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base)
 
 void ncStartModes()
 {
-	uint32_t half_width = (width/2)-1;
+	uint32_t half_width = (width/2)-1; // -1 for divide line space
 
 	modes[0].current = video;
 	modes[0].height = height;
@@ -170,11 +170,22 @@ void ncStartModes()
 
 }
 
+void ncDivideLine()
+{
+	for ( int i = 0 ; i < height ; i++ )
+	{
+		video[(39*2)+(i*LINE_LENGTH)] = '|';
+		video[(39*2)+(i*LINE_LENGTH)+1] = 0xF0;
+	}
+}
+
 void ncStartMulti()
 {
 	ncClear();
 
 	ncStartModes();
+
+	ncDivideLine();
 }
 
 uint32_t line_length( int sc )
@@ -187,11 +198,16 @@ uint8_t * last_line( int sc )
 	return LAST_LINE + modes[sc].offset;
 }
 
-int is_in_screen( int index )
+int is_in_screen(int sc, int index )
 {
-	int aux = index/modes[1].offset;
+	while( index >= LINE_LENGTH )
+		index-= LINE_LENGTH;
+
+	if ( is_divide_line(index) ) // divide line position
+		return 0;
+
+	return ( ( index >= (modes[sc].offset) ) && ( index <= ( LINE_LENGTH-(modes[1-sc].offset) ) ) );
 	
-	return !( aux%2 == 0 );
 }
 
 void ncScrollMulti( int sc )
@@ -200,8 +216,9 @@ void ncScrollMulti( int sc )
 
 	for ( i ; i < LAST_LINE - video ; i++ )
 	{
-		if ( is_in_screen(i) == sc )
+		if ( is_in_screen(sc,i) )
 			video[i] = video[i+LINE_LENGTH];
+		
 	}
 
 	for ( i = last_line(sc) - video ; i < last_line(sc) - video + line_length(sc) ; i++ )
@@ -234,9 +251,17 @@ void ncBackSpaceMulti( int sc )
 	*(--modes[sc].current) = ' ';
 }
 
+int is_divide_line( uint32_t index )
+{
+	while( index >= LINE_LENGTH )
+		index-= LINE_LENGTH;
+
+	return (index == 39*2 || index == (39*2)+1);
+}
+
 void ncPrintCharMulti( int sc, const char c )
 {
-	if ( modes[sc].current == last_line(sc) )
+	if ( modes[sc].current >= last_line(sc) )
 		ncScrollMulti(sc);
 	
 	if ( c == '\n' )
@@ -245,13 +270,15 @@ void ncPrintCharMulti( int sc, const char c )
 		ncBackSpaceMulti(sc);
 	else
 	{
-		if ( (modes[sc].current - video) % line_length(sc) != 0 )
+		uint32_t position = modes[sc].current - video;
+		// if ( position == modes[sc].offset || ( position % (LINE_LENGTH - modes[1-sc].offset) != 0 && position % LINE_LENGTH != 0 ))
+		if ( position == modes[sc].offset || ( position % ((width) + modes[sc].offset) != 0 && position >= modes[sc].offset && !is_divide_line(position) ))
 		{
 			*(modes[sc].current++) = c;
 			*(modes[sc].current++) = DEFAULT_COLOR;
 		}else
 		{
-			modes[sc].current += width+8;
+			modes[sc].current += width+2;
 			*(modes[sc].current++) = c;
 			*(modes[sc].current++) = DEFAULT_COLOR;
 		}
