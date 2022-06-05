@@ -9,8 +9,9 @@ void start_test()
     while (!exit)
     {
         printMulti(0,"Hello ");
+        printMulti(1,"Hola");
         uint64_t aux = 0;
-        while( aux < 0xFFFFFF )
+        while( aux < 0xFFFFF )
             aux++;
     }
 }
