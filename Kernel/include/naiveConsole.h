@@ -16,7 +16,7 @@ typedef struct screen
     uint32_t offset;
 }screen;
 
-
+uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
 void ncPrint(const char * string);
 void ncPrintChar(char character);
 void ncBackSpace();

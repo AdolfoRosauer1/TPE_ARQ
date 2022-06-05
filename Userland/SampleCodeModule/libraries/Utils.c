@@ -30,6 +30,16 @@ void putDec(int num)
     system_call(WRITE,num,1,0,0,0);
 }
 
+void putHex(int num)
+{
+    print("0x");
+    if (num<=15)
+    {
+        putChar('0');
+    }
+    system_call(WRITE,num,2,0,0,0);
+}
+
 void print(char * string)
 {
     while (*string != 0)

@@ -13,6 +13,7 @@
 
 #define MAX_SIZE 30
 
+extern void saveRegisterInfo();
 extern unsigned char keyPress();
 extern int keyboardStatus();
 char scancode_Ascii( uint8_t scancode );

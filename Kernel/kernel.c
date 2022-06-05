@@ -4,6 +4,7 @@
 #include <moduleLoader.h>
 #include <naiveConsole.h>
 #include <idtLoader.h>
+#include <exception.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -90,6 +91,7 @@ int main()
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
 	ncPrint("  Calling the sample code module returned: ");
+	saveInitialState((uint64_t)sampleCodeModuleAddress, getSP());
 	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
 	ncNewline();
 	ncNewline();

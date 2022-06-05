@@ -7,5 +7,7 @@
 
 void start_shell();
 void printTime();
+void getRegInfo();
+void help();
 
 #endif

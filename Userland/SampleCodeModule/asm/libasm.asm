@@ -1,5 +1,5 @@
 GLOBAL system_call
-
+GLOBAL InvOpCodeExc
 
 SECTION .text
 
@@ -50,3 +50,8 @@ system_call:
 	mov rsp, rbp
   	pop rbp
   	ret
+
+
+;Fuente: https://www.felixcloutier.com/x86/ud
+InvOpCodeExc:
+	ud2

@@ -5,6 +5,7 @@
 #include <naiveConsole.h>
 #include <time.h>
 #include <rtc.h>
+#include <mem.h>
 
 
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9) {
@@ -36,8 +37,8 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             break; 
         case RTC:
             return (getTime(rsi));
-        case SYS_BACKSPACE:
-            ncBackSpace();
+        case REG_INFO:
+            getRegistersInfo();
             break;
         case MULTI_START:
             ncStartMulti();

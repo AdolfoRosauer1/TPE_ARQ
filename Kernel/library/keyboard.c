@@ -49,7 +49,7 @@ void keyboardHandler()
         if(action == PRESS){
             if ( scancode == CTRL_PRESS )
             {
-                
+                saveRegisterInfo();
             }
             else if (scancode == MAYUS)
             {

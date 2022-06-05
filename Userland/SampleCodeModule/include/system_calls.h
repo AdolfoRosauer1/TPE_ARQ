@@ -8,6 +8,7 @@
 #define CLEAR 3
 #define RTC 4
 #define POLL_READ 5
+#define REG_INFO 6
 
 #define MULTI_START 7
 

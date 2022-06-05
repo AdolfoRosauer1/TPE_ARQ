@@ -15,6 +15,7 @@
 
 void putChar(char c);
 void putDec(int num);
+void putHex(int num);
 void clear();
 unsigned char getChar();
 void scan(char *buffer, int size);
