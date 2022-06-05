@@ -96,3 +96,23 @@ int strcmp(char string1[], char string2[])
     return -1;
 }
 
+void putCharMulti( int sc, const char c )
+{
+    if ( c != 0 )
+        system_call(WRITE,c,0,MULTI_MODE,sc,0);
+}
+
+void printMulti( int sc, const char * string )
+{
+    int i = 0;
+    while ( string[i] != 0 )
+    {
+        putCharMulti( sc, string[i++] );
+    }
+}
+
+void startMulti()
+{
+    system_call(MULTI_START,0,0,0,0,0);
+}
+

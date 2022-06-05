@@ -12,7 +12,11 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
         case WRITE:
             if (rdx==0)
             {
-            ncPrintChar((char)rsi);
+                if ( rcx != MULTI_MODE )
+                    ncPrintChar((char)rsi);
+                else
+                    ncPrintCharMulti(r8,(char)rsi);
+                break;
             }
             else if (rdx==1)
             {
@@ -34,6 +38,9 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             return (getTime(rsi));
         case SYS_BACKSPACE:
             ncBackSpace();
+            break;
+        case MULTI_START:
+            ncStartMulti();
             break;    
         default:
             break;

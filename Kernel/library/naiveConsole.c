@@ -245,8 +245,16 @@ void ncPrintCharMulti( int sc, const char c )
 		ncBackSpaceMulti(sc);
 	else
 	{
-		*(modes[sc].current++) = c;
-		*(modes[sc].current++) = DEFAULT_COLOR;
+		if ( (modes[sc].current - video) % line_length(sc) != 0 )
+		{
+			*(modes[sc].current++) = c;
+			*(modes[sc].current++) = DEFAULT_COLOR;
+		}else
+		{
+			modes[sc].current += width+8;
+			*(modes[sc].current++) = c;
+			*(modes[sc].current++) = DEFAULT_COLOR;
+		}
 	}
 }
 

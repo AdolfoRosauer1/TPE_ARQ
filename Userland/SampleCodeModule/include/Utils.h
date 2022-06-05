@@ -27,4 +27,9 @@ uint8_t getTime(int descriptor);
 #define IS_DIGIT(c) ((c) >= '0' && (c) <= '9')
 
 
+void putCharMulti( int sc, const char c );
+void printMulti( int sc, const char * string );
+void startMulti();
+
+
 #endif
