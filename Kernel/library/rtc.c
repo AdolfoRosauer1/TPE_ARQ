@@ -1,5 +1,6 @@
 #include <rtc.h>
 
-uint8_t getTime(uint64_t descriptor){
+uint8_t getTime(uint64_t descriptor)
+{
     return getRTC(descriptor);
 }

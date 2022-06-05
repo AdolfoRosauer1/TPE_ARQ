@@ -10,20 +10,28 @@
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9) {
     switch (rdi) {
         case WRITE:
+            if (rdx==0)
+            {
             ncPrintChar((char)rsi);
+            }
+            else if (rdx==1)
+            {
+                ncPrintDec(rsi);
+            }
+            else if (rdx==2)
+            {
+                ncPrintHex(rsi);
+            }
             break;
         case READ:
-            return pollread(rsi,rdx,rcx,0xFFFF);
-            break;
+            return pollread(rsi,rdx,rcx,0xFFFFFFFF);
         case POLL_READ:
             return pollread(rsi,rdx,rcx,r8);
-            break;
         case CLEAR:
             ncClear();
             break; 
         case RTC:
-            getTime(rsi);
-            break;   
+            return (getTime(rsi));
         case SYS_BACKSPACE:
             ncBackSpace();
             break;    

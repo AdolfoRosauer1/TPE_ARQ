@@ -14,10 +14,12 @@
 #define STD_IN 0
 
 void putChar(char c);
+void putDec(int num);
 void clear();
 unsigned char getChar();
 void scan(char *buffer, int size);
 void print(char * string);
+uint8_t getTime(int descriptor);
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
 #define IS_LOWER(c) ((c) >= 'a' && (c) <= 'z')

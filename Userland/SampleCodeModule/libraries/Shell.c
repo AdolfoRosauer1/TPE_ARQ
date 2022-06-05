@@ -12,10 +12,31 @@ void start_shell()
     {
         print(">> ");
         scanf(buffer,MAX_SIZE);
-        if ( strcmp("exit",buffer) == 0 )
+        if ( strcmp("/exit",buffer) == 0 )
         {
             exit = 1;
         }
-        
+        else if ( strcmp("/time",buffer) == 0 )
+        {
+            printTime();
+        }
+        else
+        {
+            print("Invalid command, try /help\n");
+        }        
     }
+}
+
+void printTime()
+{   
+    putDec(getTime(HOURS));
+    print(":");
+    putDec(getTime(MINUTES));
+    print("-");
+    putDec(getTime(DAY));
+    print("/");
+    putDec(getTime(MONTH));
+    print("/");
+    putDec(getTime(YEAR));
+    putChar('\n');
 }

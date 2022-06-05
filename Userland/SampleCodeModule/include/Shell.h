@@ -6,5 +6,6 @@
 #define MAX_SIZE 50
 
 void start_shell();
+void printTime();
 
 #endif
