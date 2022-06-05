@@ -9,7 +9,7 @@ void clear()
 unsigned char getChar()
 {
     char c;    
-    while ( (system_call(POLL_READ,STD_IN,&c,1,5000,0)) == 0 );
+    while ( (system_call(READ,STD_IN,&c,1,5000,0)) == 0 );
     return c;
 }
 

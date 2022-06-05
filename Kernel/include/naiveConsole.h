@@ -8,6 +8,14 @@
 #define LINE_LENGTH width*2
 #define LAST_LINE video + (width*height*2) - LINE_LENGTH
 
+typedef struct screen
+{
+    uint8_t * current;
+    uint32_t width;
+    uint32_t height;
+    uint32_t offset;
+}screen;
+
 
 void ncPrint(const char * string);
 void ncPrintChar(char character);
@@ -18,5 +26,17 @@ void ncPrintHex(uint64_t value);
 void ncPrintBin(uint64_t value);
 void ncPrintBase(uint64_t value, uint32_t base);
 void ncClear();
+
+//   left/right console methods
+
+void ncStartMulti();
+uint32_t line_length( int sc );
+uint8_t * last_line( int sc );
+int is_in_screen( int index );
+void ncScrollMulti( int sc );
+void ncNewlineMulti( int sc );
+void ncBackspaceMulti( int sc );
+void ncPrintCharMulti( int sc, const char c );
+void ncPrintMulti( int sc, const char * string );
 
 #endif
