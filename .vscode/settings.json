@@ -2,6 +2,10 @@
     "files.associations": {
         "syscalls.h": "c",
         "keyboard.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "memory": "c",
+        "random": "c",
+        "optional": "c",
+        "cstring": "c"
     }
 }

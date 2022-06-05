@@ -91,7 +91,6 @@ int main()
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
 	ncPrint("  Calling the sample code module returned: ");
-	saveInitialState((uint64_t)sampleCodeModuleAddress, getSP());
 	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
 	ncNewline();
 	ncNewline();
@@ -104,5 +103,6 @@ int main()
 	ncNewline();
 
 	ncPrint("[Finished]");
+	
 	return 0;
 }

@@ -22,10 +22,6 @@ void getRegistersInfo(){
         ncPrint(str);
         ncPrintChar('\n');
     }
-    for (int i = 0; i < 0xFFFFFFF; i++)
-    {
-        /* code */
-    }
     
 }
 

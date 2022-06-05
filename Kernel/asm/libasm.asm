@@ -34,9 +34,6 @@ saveRegisterInfo:
 
 	ret
 
-getSP:
-	mov rax, rsp
-	ret
 	
 
 keyPress:

@@ -1,5 +1,7 @@
 #include <exception.h>
 
+extern void reset();
+
 static initialState initS;
 
 void exceptionDispatcher(int exception, uint64_t *registers) 
@@ -16,7 +18,11 @@ void exceptionDispatcher(int exception, uint64_t *registers)
 	}
 	saveRegisterInfo();
 	getRegistersInfo();
-	resetTerminal(registers);
+	for (int i = 0; i < 0xFFFFFFF; i++)
+    {
+        /* code */
+    }
+	reset();
 }
 
 void zeroDivision() 
@@ -27,16 +33,4 @@ void zeroDivision()
 void invalidOpcode() 
 {
 	ncPrint("ERROR INVALID OPCODE EXCEPTION\n");
-}
-
-void saveInitialState(uint64_t IP, uint64_t SP)
-{
-	initS.IP = IP;
-	initS.SP = SP;
-}
-
-void resetTerminal(uint64_t *registers)
-{
-	registers[IP_INDEX] = initS.IP;
-	registers[SP_INDEX] = initS.SP;
 }
