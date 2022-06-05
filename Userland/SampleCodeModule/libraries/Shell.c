@@ -42,26 +42,26 @@ void printTime()
 }
 
 void printHelp(){
-    char *stringout = "En la siguiente lista se muestran los posibles comandos a ser utilizados \n";
-    stringout = strcat(stringout, "incluyendo una breve descripcion de que hacen y su uso: \n");
+    char *stringout = "In the following list are listed all the comands that you can use \n";
+    stringout = strcat(stringout, "including a short description of each and what they do. \n");
     print(stringout);
 
-    print("help -- muestra una lista de las funciones posibles a ser ejecutadas.\n");
+    print("help -- show the list of comands being able to be executed.\n");
     print("\n");
-    print("divbyzero -- muestra el funcionamiento de la excepcion conocida como division por 0.\n");
+    print("divbyzero -- show the functionality of the exception known as divide by 0.\n");
     print("\n");
-    print("codopinv -- muestra el funcionamiento de la excepcion de codigo de oper invalido.\n");
+    print("codopinv -- shows the functionality of the exception known as op code invalid.\n");
     print("\n");
-    print("inforeg -- realiza un dump en pantalla del valor de todos los registros.\n");
+    print("inforeg -- makes a dump of all the registries in the screen.\n");
     print("\n");
-    print("printmem -- realiza un dump en pantalla de los 32bits de memoria desde la direccion recibida como argumento.\n");
+    print("printmem -- makes a dunp on screen of a 32 bytes section of memory starting by the address passed as argument.\n");
     print("\n");    
-    print("time -- imprime el dia y la hora del sistema en formato hh:mm-dd/mm/yyyy.\n");
+    print("time -- prints the day and hour in the format: hh:mm-dd/mm/yyyy.\n");
     print("\n");
-    print("primos -- imprime los numeros primos desde el 1 en pantalla.\n");
+    print("primos -- prints prime numbers till stoped from the number 1.\n");
     print("\n");
-    print("fibonacchi -- imprime la serie de fibonacchi empezando en el 1...\n");
+    print("fibonacchi -- prints the fibonacchi series starting with 1...\n");
     print("\n");
-    print("com1 | com2 -- el uso del caracter | habilitara la division de la pantalla en 2 y en cada lado se ejecutara cada comando.\n");
+    print("com1 | com2 -- the use of this | caracter divides the screen by half and executes each comand on a part of the screen.\n");
     print("\n");
 }
