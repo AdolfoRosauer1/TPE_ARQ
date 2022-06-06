@@ -128,7 +128,7 @@ int get_command_code( char command[MAX_LENGTH] )
 void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
 {
     if ( input[1] == '|' )
-    {
+    { //falta una parser function que permita determinar donde estan los args de app1 antes del |, existen casos donde no siempre la app2 esta en input[2]
        int code1 = get_command_code(input[0]);
        int code2 = get_command_code(input[2]);
 
@@ -144,8 +144,8 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
 }
 
 void pipe_mode( int app1, int app2, char input[MAX_WORDS][MAX_LENGTH] )
-{
-    
+{ // while(1) que distribuye los recursos entre las apps y sus impresiones a pantalla
+
 }
 
 command_dispatcher( int code, char input[MAX_WORDS-1][MAX_LENGTH] )
