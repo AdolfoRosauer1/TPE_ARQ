@@ -103,4 +103,52 @@ void printHelp(){
     print("\n");
     print("com1 | com2 -- the use of the | caracter divides the screen in half \n and executes each command on the respective part of the screen.\n");
     print("\n");
+    print("exit -- exits the program\n");
+}
+
+
+int get_command_code( char command[MAX_LENGTH] )
+{
+    int index = INSTRUCTIONS/2;
+    int cmp = strcmp(command,commandList[index]);
+    int count = 1;
+    do
+    {
+        if ( cmp == 0 )
+            return index;
+        index += (cmp * index/2);
+        int cmp = strcmp(command,commandList[index]);
+        count++;
+    } while ( count < INSTRUCTIONS );
+    
+
+    return -1;
+}
+
+void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
+{
+    if ( input[1] == '|' )
+    {
+       int code1 = get_command_code(input[0]);
+       int code2 = get_command_code(input[2]);
+
+       pipe_mode(code1,code2,input);
+       
+    }else{ //normal mode
+        int code = get_command_code(input[0]);
+        if ( code != -1 )
+            command_dispatcher(code,input+1);
+        
+    }
+    
+}
+
+void pipe_mode( int app1, int app2, char input[MAX_WORDS][MAX_LENGTH] )
+{
+    
+}
+
+command_dispatcher( int code, char input[MAX_WORDS-1][MAX_LENGTH] )
+{ // 3 modes --> 0 for fullscreen, 1 for left, 2 for right
+
 }
