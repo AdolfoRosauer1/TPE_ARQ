@@ -1,7 +1,7 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 #include <system_calls.h>
-#include <stdlib.h>
+
 
 //Para el rtc
 #define MINUTES 2

@@ -11,7 +11,7 @@ void start_test()
         printMulti(0,"Hello ");
         printMulti(1,"Hola");
         uint64_t aux = 0;
-        while( aux < 0xFFFFF )
+        while( aux < 0xFFFFFF )
             aux++;
     }
 }

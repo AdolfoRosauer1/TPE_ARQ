@@ -24,6 +24,12 @@ void start_shell()
         scanf(buffer,MAX_SIZE);
         char command[MAX_WORDS][MAX_LENGTH];
         divide_string(command,buffer);
+
+        for( int i = 0 ; i < MAX_WORDS ; i++ ){
+            print(command[i]);
+            putChar('\n');
+        }
+
         if ( strcmp("exit",buffer) == 0 )
         {
             exit = 1;

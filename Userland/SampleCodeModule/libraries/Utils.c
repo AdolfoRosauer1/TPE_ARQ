@@ -49,7 +49,7 @@ void print(char * string)
     }    
 }
 
-void scanf(char *buffer, int size)
+void scanf(char *buffer, int size) //missing backspace fix
 {
     if ( size == 0 )
         return 1;
@@ -117,22 +117,27 @@ void strcpy( char * target, char * source, int len )
 
 void divide_string(char target[MAX_WORDS][MAX_LENGTH], char * string )
 {
-    int start = 0;
+    int aux = 0;
     int k = 0;
+    char * auxPtr = string;
 
     for ( int i = 0 ; string[i] != 0 ; i++ )
     {
-        if ( string[i] == ' ' )
-        {
-            int len = i - start;
-            if ( len > 0 && len <= MAX_LENGTH && k < MAX_WORDS )
-            {
-                strcpy(target[k++],string+i,len);
-            }else {print("Invalid command arguments"); putChar('\n'); return;}
-            start = i+1;
-        }
+        // if ( string[i] == ' ' )
+        // {
+        //     int len = i - start;
+        //     if ( len > 0 && len <= MAX_LENGTH && k < MAX_WORDS )
+        //     {
+        //         strcpy(target[k++],auxPtr,len);
+        //         auxPtr+=i;
+        //     }else {print("Invalid command arguments"); putChar('\n'); return;}
+        //     start = i+1;
+        // }
+        if ( string[i] != ' ') 
+            target[k][aux++]=string[i];
+        else {target[k++][aux]=0;aux=0;}
     }
-
+    k++;
     for ( k ; k < MAX_WORDS ; k++ )
         target[k][0]=0;
 

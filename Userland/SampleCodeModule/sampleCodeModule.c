@@ -4,7 +4,7 @@
 
 
 int main() {
-	// start_test();
+	start_test();
 	start_shell();
 	return 0;
 }
