@@ -19,8 +19,8 @@
 #define MAX_LENGTH 20
 
 void putChar(char c);
-void putDec(int num);
-void putHex(int num);
+void putDec(uint64_t num);
+void putHex(uint64_t num);
 void clear();
 unsigned char getChar();
 void scanf(char *buffer, int size);

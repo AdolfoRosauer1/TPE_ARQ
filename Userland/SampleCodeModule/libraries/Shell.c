@@ -150,7 +150,7 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
         uint64_t c = 0;
         while( 1 )
         {
-            system_call(POLL_READ,1,&c,1,10,0); //KBD_IN es 1
+            system_call(POLL_READ,1,&c,1,1000,0); //KBD_IN es 1
             if ( c == 1 )
             {
                 unpipe_my_pipe();
@@ -170,7 +170,9 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
                     uint64_t toPrint1 = command_dispatcher(FULL_MD,app1,EMPTY);
                     uint64_t toPrint2 = command_dispatcher(FULL_MD,app2,EMPTY);
                     putDecMulti(LEFT_SC,toPrint1);
+                    printMulti(LEFT_SC,"\n");
                     putDecMulti(RIGHT_SC,toPrint2);
+                    printMulti(RIGHT_SC,"\n");
                 }
             }else if ( !app1_dispatched )
             {
@@ -201,7 +203,7 @@ void full_screen_infinite( int code )
     uint64_t toPrint = command_dispatcher(0,code,EMPTY);
     putDec(toPrint);
     print("\n");
-    system_call(POLL_READ,1,&c,1,10,0); //KBD_IN es 1
+    system_call(POLL_READ,1,&c,1,100,0); //KBD_IN es 1
         if ( c == 1 )
             break;
     }

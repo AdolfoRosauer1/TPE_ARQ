@@ -6,6 +6,7 @@
         "memory": "c",
         "random": "c",
         "optional": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "fibonacci.h": "c"
     }
 }

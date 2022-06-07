@@ -28,6 +28,9 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             break;
         case MULTI_START:
             ncStartMulti();
+            break;
+        case PRINT_MEM:
+            printMemory(rsi);
             break;    
         default:
             break;

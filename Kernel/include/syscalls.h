@@ -17,6 +17,7 @@
 #define POLL_READ 5
 #define REG_INFO 6
 #define MULTI_START 7
+#define PRINT_MEM 8
 
 uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout);
 

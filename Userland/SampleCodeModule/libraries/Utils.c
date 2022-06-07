@@ -19,18 +19,12 @@ void putChar(char c)
         system_call(WRITE,c,0,0,0,0);
 }
 
-void putDec(int num)
+void putDec(uint64_t num)
 {
-    int digits = 1;
-    for (int i = num/10; i != 0; digits++,i/=10);
-    if (digits == 1)
-    {
-        putChar('0');
-    }
     system_call(WRITE,num,1,0,0,0);
 }
 
-void putHex(int num)
+void putHex(uint64_t num)
 {
     print("0x");
     if (num<=15)
