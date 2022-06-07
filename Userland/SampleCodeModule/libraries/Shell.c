@@ -25,8 +25,9 @@ void start_shell()
         char command[MAX_WORDS][MAX_LENGTH];
         divide_string(command,buffer);
 
-        for( int i = 0 ; i < MAX_WORDS ; i++ ){
-            print(command[i]);
+        int i = 0;
+        while( command[i][0] != 0 ){
+            print(command[i++]);
             putChar('\n');
         }
 
@@ -46,22 +47,13 @@ void exit_shell()
 
 int get_command_code( char command[MAX_LENGTH] )
 {
-    // int index = (INSTRUCTIONS-1)/2;
-    int index = 3;
-    print("\n will analyze:  ");
-    print(command);
+    int index = (INSTRUCTIONS-1)/2;
     int cmp = strcmp(command,commandList[index]);
     int count = 1;
     do
     {
-        print("\n index:  ");
-        putDec(index);
-        print("     cmp:  ");
-        if ( cmp == 0 || cmp == 1 || cmp == -1 )
-        putDec((uint64_t)cmp);
         if ( cmp == 0 )
         {
-            print("\n COMMAND CODE FOUND \n");
             return index;
         }
         index += (cmp * index/2);
@@ -71,7 +63,6 @@ int get_command_code( char command[MAX_LENGTH] )
         count++;
     } while ( count < INSTRUCTIONS );
     
-    print("\n COMMAND CODE NOT FOUND \n");
     return -1;
 }
 
@@ -80,37 +71,64 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
     int code1 = get_command_code( input[0] );
     if ( code1 != -1 && code1 != PRINTM )
     {
-        if ( input[1] == '|' )
+        if ( input[1] == "|" )
         { //falta una parser function que permita determinar donde estan los args de app1 antes del |, existen casos donde no siempre la app2 esta en input[2]
             int code2 = get_command_code(input[2]);
             if ( code2 != -1 )
-                pipe_handler(code1,code2,input);
-            else
+            {
+                if ( code2 == PRINTM )
+                    pipe_handler(code1,code2,EMPTY,input[3]);
+                else
+                    pipe_handler(code1,code2,EMPTY,EMPTY);
+            }else
             {
                 print("Invalid use of pipe: Invalid command\n");
             }
         
         }else{ //normal mode
-            command_dispatcher(FULL_SC,code1,input+1);   
+            if ( strlen(input[1]) == 0 )
+                command_dispatcher(FULL_SC,code1,EMPTY); 
+            else
+                print("Invalid argument\n");  
         }
     }else if ( code1 == PRINTM )
     {
-        
+        if ( input[2] == "|" )
+        {
+            int code2 = get_command_code(input[3]);
+            if ( code2 != -1 )
+            {
+                if ( code2 == PRINTM )
+                    pipe_handler(code1,code2,input[1],input[4]);
+                else
+                    pipe_handler(code1,code2,input[1],EMPTY);
+            }else
+            {
+                print("Invalid use of pipe: Invalid command\n");
+            }
+        }else
+        {
+            command_dispatcher(FULL_SC,code1,input[1]);
+        }
     }
+    else
+        print("Invalid input \n");
     return;
     
 }
 
-void pipe_handler( int app1, int app2, char input[MAX_WORDS][MAX_LENGTH] )
+void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_LENGTH] )
 { // while(1) que distribuye los recursos entre las apps y sus impresiones a pantalla
     int pipeExit = 0;
+    startMulti();
     while( !pipeExit )
     {
-        
+        printMulti(0,"\n WOW you have entered PIPE MODE!\n");
+        printMulti(1,"\n WOW you have entered PIPE MODE!\n");
     }
 }
 
-uint64_t command_dispatcher( int mode, int code, char input[MAX_WORDS-1][MAX_LENGTH] )
+uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
 { // 3 modes --> 0 for fullscreen, 1 for left, 2 for right
     if ( mode == FULL_SC || mode == LEFT_SC || mode == RIGHT_SC )
     {
@@ -150,7 +168,7 @@ uint64_t command_dispatcher( int mode, int code, char input[MAX_WORDS-1][MAX_LEN
     }else
     {
         putDec(mode);
-        print("   Invalid screen mode input\n");
+        print(":   Invalid screen mode input\n");
     }
     
     return 0;

@@ -28,7 +28,7 @@ static char commandList[INSTRUCTIONS][MAX_LENGTH] = {
 #define LEFT_SC 1
 #define RIGHT_SC 2
 
-
+static const char EMPTY[MAX_LENGTH] = "";
 
 extern void InvOpCodeExc();
 
@@ -38,7 +38,7 @@ void getRegInfo();
 void printHelp( int mode );
 
 void command_handler( char input[MAX_WORDS][MAX_LENGTH] );
-void pipe_handler( int app1, int app2, char input[MAX_WORDS][MAX_LENGTH] );
-uint64_t command_dispatcher( int mode, int code, char input[MAX_WORDS-1][MAX_LENGTH] );
+void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_LENGTH] );
+uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] );
 
 #endif
