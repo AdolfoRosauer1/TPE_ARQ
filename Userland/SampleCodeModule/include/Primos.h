@@ -2,4 +2,4 @@
 
 void resetPrimo();
 int primo_next();
-bool es_primo(int n);
+int es_primo(int n);

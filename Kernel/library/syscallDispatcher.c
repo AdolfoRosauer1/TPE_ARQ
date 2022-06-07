@@ -21,11 +21,17 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             }
             else if (rdx==1)
             {
-                ncPrintDec(rsi);
+                if ( rcx != MULTI_MODE )
+                    ncPrintDec(rsi);
+                else
+                    ncPrintDecMulti(r8,rsi);
             }
             else if (rdx==2)
             {
-                ncPrintHex(rsi);
+                if ( rcx != MULTI_MODE )
+                    ncPrintHex(rsi);
+                else
+                    ncPrintHexMulti(r8,rsi);
             }
             break;
         case READ:

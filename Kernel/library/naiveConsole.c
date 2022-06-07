@@ -293,3 +293,19 @@ void ncPrintMulti( int sc, const char * string )
 		ncPrintCharMulti(sc,string[i]);
 	
 }
+
+void ncPrintBaseMulti(int sc, uint64_t value, uint32_t base)
+{
+    uintToBase(value, buffer, base);
+    ncPrintMulti(sc,buffer);
+}
+
+void ncPrintDecMulti(int sc, uint64_t value)
+{
+	ncPrintBaseMulti(sc,value, 10);
+}
+
+void ncPrintHexMulti(int sc, uint64_t value)
+{
+	ncPrintBaseMulti(sc,value, 16);
+}

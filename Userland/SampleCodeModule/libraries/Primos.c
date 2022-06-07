@@ -1,5 +1,4 @@
 #include <Utils.h>
-#include <stdbool.h>
 
 static uint64_t lastPrimo;
 
@@ -22,7 +21,7 @@ static uint64_t lastPrimo;
 }
 */
 
-bool es_primo(int n){
+int es_primo(int n){
     int cantdediv = 0;
     for(int i=1; i<n+1; i++){
         if (n%i==0){
@@ -30,9 +29,9 @@ bool es_primo(int n){
         }
     }
     if (cantdediv==2){
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
     
 }
 
@@ -48,7 +47,7 @@ int primo_next(){
     }
     
     lastPrimo++;
-    while (es_primo(lastPrimo)==false){
+    while ( !es_primo(lastPrimo) ){
         lastPrimo++;
     }
     return lastPrimo;

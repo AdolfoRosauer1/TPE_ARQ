@@ -30,34 +30,7 @@ void start_shell()
             putChar('\n');
         }
 
-        if ( strcmp("exit",buffer) == 0 )
-        {
-            exit = 1;
-        }
-        else if ( strcmp("help",buffer) == 0 )
-        {
-            printHelp();
-        }
-        else if ( strcmp("time",buffer) == 0 )
-        {
-            printTime();
-        }        
-        else if ( strcmp("divzero",buffer) == 0 )
-        {
-            divZero();
-        }
-        else if ( strcmp("opcode",buffer) == 0 )
-        {
-            invalidOpCode();
-        }       
-        else if ( strcmp("inforeg",buffer) == 0 )
-        {
-            getRegInfo();
-        }
-        else
-        {
-            print("Invalid command, try /help\n");
-        }        
+        command_handler(command);      
     }
 }
 
@@ -66,89 +39,119 @@ void getRegInfo()
     system_call(REG_INFO,0,0,0,0,0);
 }
 
-
-void printTime()
-{   
-    putDec(getTime(HOURS));
-    print(":");
-    putDec(getTime(MINUTES));
-    print("-");
-    putDec(getTime(DAY));
-    print("/");
-    putDec(getTime(MONTH));
-    print("/");
-    putDec(getTime(YEAR));
-    putChar('\n');
+void exit_shell()
+{
+    exit = 1;
 }
-
-void printHelp(){
-    char *stringout = "In the following list are listed all the commands that you can use \nincluding a short description of each and what they do. \n";
-    print(stringout);
-
-    print("help -- shows the list of commands being able to be executed.\n");
-    print("\n");
-    print("divzero -- shows the functionality of the exception known as divide by 0.\n");
-    print("\n");
-    print("opcode -- shows the functionality of the exception known as invalid opcode.\n");
-    print("\n");
-    print("inforeg -- makes a dump of all the registries in the screen.\n");
-    print("\n");
-    print("printmem -- makes a memory dump on screen of a 32 bytes section of memory starting by the address passed as an argument.\n");
-    print("\n");    
-    print("time -- prints the day and hour in the format: hh:mm-dd/mm/yyyy.\n");
-    print("\n");
-    print("primos -- prints prime numbers till stoped from the number 1.\n");
-    print("\n");
-    print("fibonacci -- prints the fibonacci series starting with 1\n");
-    print("\n");
-    print("com1 | com2 -- the use of the | caracter divides the screen in half \n and executes each command on the respective part of the screen.\n");
-    print("\n");
-    print("exit -- exits the program\n");
-}
-
 
 int get_command_code( char command[MAX_LENGTH] )
 {
-    int index = INSTRUCTIONS/2;
+    // int index = (INSTRUCTIONS-1)/2;
+    int index = 3;
+    print("\n will analyze:  ");
+    print(command);
     int cmp = strcmp(command,commandList[index]);
     int count = 1;
     do
     {
+        print("\n index:  ");
+        putDec(index);
+        print("     cmp:  ");
+        if ( cmp == 0 || cmp == 1 || cmp == -1 )
+        putDec((uint64_t)cmp);
         if ( cmp == 0 )
+        {
+            print("\n COMMAND CODE FOUND \n");
             return index;
+        }
         index += (cmp * index/2);
-        int cmp = strcmp(command,commandList[index]);
+        (index < 0 )? (index=0):(index=index);
+        (index > INSTRUCTIONS )? (index=INSTRUCTIONS):(index=index);
+        cmp = strcmp(command,commandList[index]);
         count++;
     } while ( count < INSTRUCTIONS );
     
-
+    print("\n COMMAND CODE NOT FOUND \n");
     return -1;
 }
 
 void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
 {
-    if ( input[1] == '|' )
-    { //falta una parser function que permita determinar donde estan los args de app1 antes del |, existen casos donde no siempre la app2 esta en input[2]
-       int code1 = get_command_code(input[0]);
-       int code2 = get_command_code(input[2]);
-
-       pipe_mode(code1,code2,input);
-       
-    }else{ //normal mode
-        int code = get_command_code(input[0]);
-        if ( code != -1 )
-            command_dispatcher(code,input+1);
+    int code1 = get_command_code( input[0] );
+    if ( code1 != -1 && code1 != PRINTM )
+    {
+        if ( input[1] == '|' )
+        { //falta una parser function que permita determinar donde estan los args de app1 antes del |, existen casos donde no siempre la app2 esta en input[2]
+            int code2 = get_command_code(input[2]);
+            if ( code2 != -1 )
+                pipe_handler(code1,code2,input);
+            else
+            {
+                print("Invalid use of pipe: Invalid command\n");
+            }
+        
+        }else{ //normal mode
+            command_dispatcher(FULL_SC,code1,input+1);   
+        }
+    }else if ( code1 == PRINTM )
+    {
         
     }
+    return;
     
 }
 
-void pipe_mode( int app1, int app2, char input[MAX_WORDS][MAX_LENGTH] )
+void pipe_handler( int app1, int app2, char input[MAX_WORDS][MAX_LENGTH] )
 { // while(1) que distribuye los recursos entre las apps y sus impresiones a pantalla
-
+    int pipeExit = 0;
+    while( !pipeExit )
+    {
+        
+    }
 }
 
-command_dispatcher( int code, char input[MAX_WORDS-1][MAX_LENGTH] )
+uint64_t command_dispatcher( int mode, int code, char input[MAX_WORDS-1][MAX_LENGTH] )
 { // 3 modes --> 0 for fullscreen, 1 for left, 2 for right
-
+    if ( mode == FULL_SC || mode == LEFT_SC || mode == RIGHT_SC )
+    {
+        int sc = mode;
+        if ( sc != FULL_SC )
+            sc -= 1;
+        switch (code)
+        {
+            case DIV:
+                divZero();
+                break;
+            case EXITP:
+                exit_shell();
+                break;
+            case FIBO:
+                return fibo_next();
+            case HELP:
+                printHelp(sc);
+                break;
+            case INFOR:
+                getRegInfo();
+                break;
+            case OPCD:
+                invalidOpCode();
+                break;
+            case PRIME:
+                return primo_next();
+            case PRINTM:
+                break; // FALTA COMANDO DE PRINT MEMORY
+            case TIME:
+                printTime(sc);
+                break;
+            default:
+                print("invalid OPCODE \n");
+                break;
+        }
+    }else
+    {
+        putDec(mode);
+        print("   Invalid screen mode input\n");
+    }
+    
+    return 0;
 }

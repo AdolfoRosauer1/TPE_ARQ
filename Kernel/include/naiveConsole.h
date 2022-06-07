@@ -39,5 +39,7 @@ void ncNewlineMulti( int sc );
 void ncBackspaceMulti( int sc );
 void ncPrintCharMulti( int sc, const char c );
 void ncPrintMulti( int sc, const char * string );
+void ncPrintBaseMulti(int sc, uint64_t value, uint32_t base);
+void ncPrintDecMulti(int sc, uint64_t value);
 
 #endif

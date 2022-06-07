@@ -71,6 +71,7 @@ void scanf(char *buffer, int size) //missing backspace fix
                 buffer[count++] = c;
         }
         putChar(c);
+
     } while (1);
 }
 
@@ -137,7 +138,7 @@ void divide_string(char target[MAX_WORDS][MAX_LENGTH], char * string )
             target[k][aux++]=string[i];
         else {target[k++][aux]=0;aux=0;}
     }
-    k++;
+    target[k++][aux] = 0;
     for ( k ; k < MAX_WORDS ; k++ )
         target[k][0]=0;
 
@@ -196,3 +197,12 @@ void startMulti()
     system_call(MULTI_START,0,0,0,0,0);
 }
 
+putDecMulti( int sc, uint64_t value )
+{
+    system_call(WRITE,value,1,MULTI_MODE,sc,0);
+}
+
+putHexMulti( int sc, uint64_t value )
+{
+    system_call(WRITE,value,1,MULTI_MODE,sc,0);
+}
