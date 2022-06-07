@@ -230,12 +230,21 @@ void ncScrollMulti( int sc )
 
 }
 
+uint32_t line_pos( uint8_t * screen_pos )
+{
+	uint32_t toReturn = screen_pos - video;
+	while( toReturn >= LINE_LENGTH )
+		toReturn -= LINE_LENGTH;
+	return toReturn;
+}
+
 void ncNewlineMulti( int sc )
 {
+
 	do
 	{
 		ncPrintCharMulti( sc, ' ' );
-	}while ( (uint32_t)( modes[sc].current - video ) % (line_length(sc)) != 0 );
+	}while ( (uint32_t)line_pos(modes[sc].current) % (modes[sc].offset + line_length(sc) + sc) != 0 );
 
 }
 

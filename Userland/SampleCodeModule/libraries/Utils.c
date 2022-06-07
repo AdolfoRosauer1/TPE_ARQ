@@ -65,10 +65,14 @@ void scanf(char *buffer, int size) //missing backspace fix
             buffer[count] = 0;
             putChar(c);
             return;
-        }else if (c != '\b')
+        }else if (c == '\b')
+        {
+            count--;
+        }else
         {
             if ( count < size-1 )
                 buffer[count++] = c;
+            
         }
         putChar(c);
 

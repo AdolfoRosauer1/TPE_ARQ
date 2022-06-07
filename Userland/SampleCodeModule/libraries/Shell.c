@@ -7,9 +7,9 @@ void divZero()
     int x = 1/0;
 }
 
-void invalidOpCode()
+void invalidOpCode(int sc)
 {
-    InvOpCodeExc();
+    InvOpCodeExc(sc);
 }
 
 void start_shell()
@@ -35,7 +35,7 @@ void start_shell()
     }
 }
 
-void getRegInfo()
+void getRegInfo(int sc)
 {
     system_call(REG_INFO,0,0,0,0,0);
 }
@@ -56,13 +56,13 @@ int get_command_code( char command[MAX_LENGTH] )
         {
             return index;
         }
-        index += (cmp * index/2);
+        index += cmp;
         (index < 0 )? (index=0):(index=index);
         (index > INSTRUCTIONS )? (index=INSTRUCTIONS):(index=index);
         cmp = strcmp(command,commandList[index]);
         count++;
     } while ( count < INSTRUCTIONS );
-    
+    print("Invalid OPCODE");
     return -1;
 }
 
@@ -71,7 +71,7 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
     int code1 = get_command_code( input[0] );
     if ( code1 != -1 && code1 != PRINTM )
     {
-        if ( input[1] == "|" )
+        if ( strcmp(input[1],"|") == 0 )
         { //falta una parser function que permita determinar donde estan los args de app1 antes del |, existen casos donde no siempre la app2 esta en input[2]
             int code2 = get_command_code(input[2]);
             if ( code2 != -1 )
@@ -93,7 +93,7 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
         }
     }else if ( code1 == PRINTM )
     {
-        if ( input[2] == "|" )
+        if ( strcmp(input[2],"|") == 0 )
         {
             int code2 = get_command_code(input[3]);
             if ( code2 != -1 )
@@ -121,10 +121,13 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
 { // while(1) que distribuye los recursos entre las apps y sus impresiones a pantalla
     int pipeExit = 0;
     startMulti();
+    
     while( !pipeExit )
     {
-        printMulti(0,"\n WOW you have entered PIPE MODE!\n");
-        printMulti(1,"\n WOW you have entered PIPE MODE!\n");
+
+        printMulti(0,"WOW!");
+        printMulti(1,"WOW!");
+        for ( int i = 0 ; i < 0xFFFFF ; i++ );
     }
 }
 
@@ -138,7 +141,7 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
         switch (code)
         {
             case DIV:
-                divZero();
+                divZero(sc);
                 break;
             case EXITP:
                 exit_shell();
@@ -149,10 +152,10 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
                 printHelp(sc);
                 break;
             case INFOR:
-                getRegInfo();
+                getRegInfo(sc);
                 break;
             case OPCD:
-                invalidOpCode();
+                invalidOpCode(sc);
                 break;
             case PRIME:
                 return primo_next();
