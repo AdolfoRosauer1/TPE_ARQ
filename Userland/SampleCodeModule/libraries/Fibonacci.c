@@ -11,13 +11,13 @@ void start_fibo(){
 
 uint64_t fibo_next(){
     if(lastFibo2 < lastFibo1){
-        if((int64_t)(MAX - lastfibo1 - lastfibo2) >= 0){
+        if((int64_t)(MAX - lastFibo1 - lastFibo2) >= 0){
             lastFibo2 += lastFibo1;
         }
         return lastFibo2;
     }
     else{
-        if((int64_t)(MAX - lastfibo1 - lastfibo2) >= 0){
+        if((int64_t)(MAX - lastFibo1 - lastFibo2) >= 0){
             lastFibo1 += lastFibo2;
         }
         return lastFibo1;
