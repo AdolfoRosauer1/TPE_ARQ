@@ -18,10 +18,8 @@ void exceptionDispatcher(int exception, uint64_t* registers)
 	}
 	saveRegisterInfo();
 	getRegistersInfo();
-	for (int i = 0; i < 0xFFFFFFF; i++)
-    {
-        /* code */
-    }
+	wait(2000);
+	reset(registers);
 }
 
 void savePointers(uint64_t IP, uint64_t SP)

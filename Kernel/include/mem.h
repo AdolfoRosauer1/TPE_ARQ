@@ -6,6 +6,7 @@
 #include <lib.h>
 
 #define REGISTERS_COUNT 16
+#define SIZE 32
 
 void saveReg(uint64_t * regs);
 void printMemory(uint64_t argument);

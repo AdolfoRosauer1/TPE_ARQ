@@ -30,18 +30,18 @@ void saveReg(uint64_t * regs){
     hasRegisters = 1;
 }
 
-void printMemory(uint64_t argument){
+void printMemory(uint64_t start){
 
-    char dump[32] = {'0'};
+    char buffer[SIZE] = {'0'};
 
-    uint8_t *memAddress = (uint8_t *)argument;
+    uint8_t *address = (uint8_t *)start;
     
-    for (int i = 0; i < 32; i++){
-        uint32_t dig = uintToBase(memAddress[i], dump, 16);
+    for (int i = 0; i < SIZE; i++){
+        uint32_t dig = uintToBase(address[i], buffer, 16);
         for(int i=0; i < 2-dig; i++){
            ncPrintChar('0');
        }
-        ncPrint(dump);
+        ncPrint(buffer);
         ncPrintChar(' ');
     }
     

@@ -42,7 +42,8 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             ncClear();
             break; 
         case RTC:
-            return (getTime(rsi));
+            ncPrintDec(getTime(rsi));
+            break;
         case REG_INFO:
             getRegistersInfo();
             break;
