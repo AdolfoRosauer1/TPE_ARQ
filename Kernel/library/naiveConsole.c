@@ -174,7 +174,7 @@ void ncDivideLine()
 	for ( int i = 0 ; i < height ; i++ )
 	{
 		video[(39*2)+(i*LINE_LENGTH)] = '|';
-		video[(39*2)+(i*LINE_LENGTH)+1] = 0xF0;
+		video[(39*2)+(i*LINE_LENGTH)+1] = 0x0F;
 	}
 }
 

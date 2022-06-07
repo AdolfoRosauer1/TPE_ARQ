@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 #include <naiveConsole.h>
+#include <interrupts.h>
+
 
 
 void timer_handler();

@@ -18,7 +18,7 @@ void exceptionDispatcher(int exception, uint64_t* registers)
 	}
 	saveRegisterInfo();
 	getRegistersInfo();
-	wait(2000);
+	wait(5000);
 	reset(registers);
 }
 

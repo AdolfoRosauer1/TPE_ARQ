@@ -41,6 +41,8 @@ int strcmp(char string1[], char string2[]);
 void putCharMulti( int sc, const char c );
 void printMulti( int sc, const char * string );
 void startMulti();
+putDecMulti( int sc, uint64_t value );
+putHexMulti( int sc, uint64_t value );
 
 
 #endif

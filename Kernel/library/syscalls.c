@@ -18,3 +18,28 @@ uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)
 
     return read;
 }
+
+void sys_write( uint64_t toWrite, uint64_t writeType,  uint64_t mode, uint64_t screen )
+{
+    if (writeType==0)
+    {
+        if ( mode != MULTI_MODE )
+            ncPrintChar((char)toWrite);
+        else
+            ncPrintCharMulti(screen,(char)toWrite);
+    }
+    else if (writeType==1)
+    {
+        if ( mode != MULTI_MODE )
+            ncPrintDec(toWrite);
+        else
+            ncPrintDecMulti(screen,toWrite);
+    }
+    else if (writeType==2)
+    {
+        if ( mode != MULTI_MODE )
+            ncPrintHex(toWrite);
+        else
+            ncPrintHexMulti(screen,toWrite);
+    }
+}

@@ -24,9 +24,14 @@ static char commandList[INSTRUCTIONS][MAX_LENGTH] = {
 #define PRINTM 7
 #define TIME 8
 
-#define FULL_SC 0
-#define LEFT_SC 1
-#define RIGHT_SC 2
+#define FULL_MD 0
+#define LEFT_MD 1
+#define RIGHT_MD 2
+
+#define LEFT_SC 0
+#define RIGHT_SC 1
+
+
 
 static const char EMPTY[MAX_LENGTH] = "";
 

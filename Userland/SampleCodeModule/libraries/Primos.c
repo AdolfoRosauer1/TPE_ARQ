@@ -36,7 +36,7 @@ int es_primo(int n){
 }
 
 
-void resetPrimo(){
+void start_prime(){
     lastPrimo=1;
 }
 

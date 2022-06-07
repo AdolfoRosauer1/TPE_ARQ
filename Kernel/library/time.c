@@ -25,10 +25,11 @@ int milis_elapsed()
 
 void wait(uint64_t timeout)
 {
-    if ( timeout != 0 )
+    if ( timeout > 0 )
     {
         uint64_t start = milis_elapsed(); 
-        while ( (milis_elapsed() - start) < timeout );
+        while ( (milis_elapsed() - start) < timeout )
+        _hlt();
     }
 
 }

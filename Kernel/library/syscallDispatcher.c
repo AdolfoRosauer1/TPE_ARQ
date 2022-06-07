@@ -11,28 +11,7 @@
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9) {
     switch (rdi) {
         case WRITE:
-            if (rdx==0)
-            {
-                if ( rcx != MULTI_MODE )
-                    ncPrintChar((char)rsi);
-                else
-                    ncPrintCharMulti(r8,(char)rsi);
-                break;
-            }
-            else if (rdx==1)
-            {
-                if ( rcx != MULTI_MODE )
-                    ncPrintDec(rsi);
-                else
-                    ncPrintDecMulti(r8,rsi);
-            }
-            else if (rdx==2)
-            {
-                if ( rcx != MULTI_MODE )
-                    ncPrintHex(rsi);
-                else
-                    ncPrintHexMulti(r8,rsi);
-            }
+            sys_write(rsi,rdx,rcx,r8);
             break;
         case READ:
             return pollread(rsi,rdx,rcx,0xFFFFFFFF);

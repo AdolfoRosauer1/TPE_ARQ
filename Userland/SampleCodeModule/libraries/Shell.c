@@ -87,7 +87,12 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
         
         }else{ //normal mode
             if ( strlen(input[1]) == 0 )
-                command_dispatcher(FULL_SC,code1,EMPTY); 
+            {
+                if ( code1 != FIBO && code1 != PRIME )
+                    command_dispatcher(FULL_MD,code1,EMPTY);
+                else
+                    full_screen_infinite(code1);
+            } 
             else
                 print("Invalid argument\n");  
         }
@@ -108,7 +113,7 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
             }
         }else
         {
-            command_dispatcher(FULL_SC,code1,input[1]);
+            command_dispatcher(FULL_MD,code1,input[1]);
         }
     }
     else
@@ -117,27 +122,97 @@ void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
     
 }
 
+void unpipe_my_pipe()
+{
+    clear();
+    return;
+}
+
 void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_LENGTH] )
 { // while(1) que distribuye los recursos entre las apps y sus impresiones a pantalla
     int pipeExit = 0;
+    int app1_dispatched = 0;
+    int app2_dispatched = 0;
     startMulti();
-    
-    while( !pipeExit )
-    {
-
-        printMulti(0,"WOW!");
-        printMulti(1,"WOW!");
-        for ( int i = 0 ; i < 0xFFFFF ; i++ );
+    if ( app1 != FIBO && app1 != PRIME ){
+        command_dispatcher(LEFT_MD,app1,param1);
+        app1_dispatched = 1;
     }
+    if ( app2 != FIBO && app2 != PRIME ){
+        command_dispatcher(RIGHT_MD,app2,param2);
+        app2_dispatched = 1;
+    }
+    if ( !app1_dispatched || !app2_dispatched ) {
+        if ( app1 == FIBO || app2 == FIBO )
+            start_fibo();
+        if ( app1 == PRIME || app2 == PRIME )
+            start_prime();
+        uint64_t c = 0;
+        while( 1 )
+        {
+            system_call(POLL_READ,1,&c,1,10,0); //KBD_IN es 1
+            if ( c == 1 )
+            {
+                unpipe_my_pipe();
+                return;
+            }
+            if ( !app1_dispatched  && !app2_dispatched )
+            {
+                if ( app1 == app2 )
+                {
+                    uint64_t toPrint = command_dispatcher(FULL_MD,app1,EMPTY); //SCREEN MODE does not matter for PRIME and FIBO apps
+                    putDecMulti(LEFT_SC,toPrint);
+                    printMulti(LEFT_SC,"\n");
+                    putDecMulti(RIGHT_SC,toPrint);
+                    printMulti(RIGHT_SC,"\n");
+                }else
+                {
+                    uint64_t toPrint1 = command_dispatcher(FULL_MD,app1,EMPTY);
+                    uint64_t toPrint2 = command_dispatcher(FULL_MD,app2,EMPTY);
+                    putDecMulti(LEFT_SC,toPrint1);
+                    putDecMulti(RIGHT_SC,toPrint2);
+                }
+            }else if ( !app1_dispatched )
+            {
+                uint64_t toPrint = command_dispatcher(FULL_MD,app1,EMPTY);
+                putDecMulti(LEFT_SC,toPrint);
+                printMulti(LEFT_SC,"\n");
+            }else
+            {
+                uint64_t toPrint = command_dispatcher(FULL_MD,app2,EMPTY);
+                putDecMulti(RIGHT_SC,toPrint);
+                printMulti(RIGHT_SC,"\n");
+            }
+        }
+    }
+    unpipe_my_pipe();
+}
+
+void full_screen_infinite( int code )
+{
+    uint64_t c = 0;
+    print("WOW DUDE THIS GONNA BE RAD!\n");
+    if ( code == PRIME )
+        start_prime();
+    if ( code == FIBO )
+        start_fibo();
+    while( 1 )
+    {
+    uint64_t toPrint = command_dispatcher(0,code,EMPTY);
+    putDec(toPrint);
+    print("\n");
+    system_call(POLL_READ,1,&c,1,10,0); //KBD_IN es 1
+        if ( c == 1 )
+            break;
+    }
+    putChar('\n');
 }
 
 uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
 { // 3 modes --> 0 for fullscreen, 1 for left, 2 for right
-    if ( mode == FULL_SC || mode == LEFT_SC || mode == RIGHT_SC )
+    if ( mode == FULL_MD || mode == LEFT_MD || mode == RIGHT_MD )
     {
         int sc = mode;
-        if ( sc != FULL_SC )
-            sc -= 1;
         switch (code)
         {
             case DIV:

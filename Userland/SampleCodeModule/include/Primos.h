@@ -1,5 +1,5 @@
 #include <stdint.h>
 
-void resetPrimo();
+void start_prime();
 int primo_next();
 int es_primo(int n);
