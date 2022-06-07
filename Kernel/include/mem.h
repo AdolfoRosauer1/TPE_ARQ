@@ -7,7 +7,7 @@
 
 #define REGISTERS_COUNT 16
 
-void savereg(uint64_t * regInfo);
+void saveReg(uint64_t * regs);
 void printMemory(uint64_t argument);
 void getRegistersInfo();
 

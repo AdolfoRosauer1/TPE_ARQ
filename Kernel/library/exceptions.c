@@ -1,9 +1,10 @@
 #include <exception.h>
 
-extern void reset();
 
+static uint64_t ip;
+static uint64_t sp;
 
-void exceptionDispatcher(int exception) 
+void exceptionDispatcher(int exception, uint64_t* registers) 
 {
 	switch(exception){
 		case ZERO_EXCEPTION_ID:
@@ -21,8 +22,19 @@ void exceptionDispatcher(int exception)
     {
         /* code */
     }
-	reset();
 }
+
+void savePointers(uint64_t IP, uint64_t SP)
+{
+ 	ip = IP;
+ 	sp = SP;
+}
+
+void reset(uint64_t *registers)
+{
+ 	registers[IP_INDEX] = ip;
+ 	registers[SP_INDEX] = sp;
+ }
 
 void zeroDivision() 
 {

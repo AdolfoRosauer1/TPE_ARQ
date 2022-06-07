@@ -5,7 +5,7 @@ GLOBAL getRTC
 GLOBAL saveRegisterInfo
 GLOBAL getSP
 
-EXTERN savereg
+EXTERN saveReg
 
 section .text
 
@@ -30,10 +30,13 @@ saveRegisterInfo:
     mov [buffer + 15*8], rax
 	
 	mov rdi, buffer
-	call savereg
+	call saveReg
 
 	ret
 
+getSP:
+	mov rax, rsp
+	ret
 	
 
 keyPress:

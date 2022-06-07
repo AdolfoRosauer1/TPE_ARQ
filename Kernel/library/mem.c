@@ -25,8 +25,8 @@ void getRegistersInfo(){
     
 }
 
-void savereg(uint64_t * regInfo){
-    backup = regInfo;
+void saveReg(uint64_t * regs){
+    backup = regs;
     hasRegisters = 1;
 }
 
