@@ -21,16 +21,16 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             ncClear();
             break; 
         case RTC:
-            ncPrintDec(getTime(rsi));
+            sys_rtc(rsi,rdx,rcx);
             break;
         case REG_INFO:
-            getRegistersInfo();
+            getRegistersInfo(rsi,rdx);
             break;
         case MULTI_START:
             ncStartMulti();
             break;
         case PRINT_MEM:
-            printMemory(rsi);
+            printMemory(rdx,rcx,rsi);
             break;    
         default:
             break;
