@@ -40,6 +40,7 @@ extern void InvOpCodeExc();
 void start_shell();
 void printTime();
 void getRegInfo();
+void print_mem(int mode, int scr, char * param);
 void printHelp( int mode );
 
 void command_handler( char input[MAX_WORDS][MAX_LENGTH] );

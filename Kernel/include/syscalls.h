@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <keyboard.h>
 #include <time.h>
+#include <naiveConsole.h>
 
 #define STD_IN 0
 

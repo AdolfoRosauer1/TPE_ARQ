@@ -1,5 +1,4 @@
 #include <syscalls.h>
-#include <time.h>
 
 
 uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)

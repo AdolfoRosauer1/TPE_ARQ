@@ -46,7 +46,7 @@ void print(char * string)
 void scanf(char *buffer, int size) //missing backspace fix
 {
     if ( size == 0 )
-        return 1;
+        return;
         
     uint64_t count = 0;
 
@@ -73,9 +73,9 @@ void scanf(char *buffer, int size) //missing backspace fix
     } while (1);
 }
 
-uint8_t getTime(int mode, int descriptor)
+uint8_t getTime(int mode, int scr, int descriptor)
 {
-    return system_call(RTC,descriptor,0,0,0,0);
+    return system_call(RTC,descriptor,mode,scr,0,0);
 }
 
 int strlen( char * string )
@@ -112,6 +112,39 @@ void strcpy( char * target, char * source, int len )
     {
         target[i] = source[i];
     }
+}
+
+static int pow(int base, unsigned int exp)
+{
+	int toRet = 1;
+	for (int i = 0; i < exp; i++)
+		toRet *= base;
+	return toRet;
+}
+
+unsigned long hexaStringToInt(char *s)
+{
+    int c;
+	unsigned long rta = 0;
+
+	if (s[0] == '0' && s[1] == 'x')
+		s += 2;
+
+	int len = strlen(s);
+
+	for (int i = 0; i < len; i++){
+
+		c = s[len-1-i] - '0';
+
+		if (c < 0 || c > 9){
+			c = s[len - 1 - i] - 'A' + 10;
+			if (c < 10 || c > 15)
+				return 0;
+		}
+
+		rta += c * pow(16, i);
+	}
+	return rta;
 }
 
 void divide_string(char target[MAX_WORDS][MAX_LENGTH], char * string )
@@ -155,12 +188,12 @@ void startMulti()
     system_call(MULTI_START,0,0,0,0,0);
 }
 
-putDecMulti( int sc, uint64_t value )
+void putDecMulti( int sc, uint64_t value )
 {
     system_call(WRITE,value,1,MULTI_MODE,sc,0);
 }
 
-putHexMulti( int sc, uint64_t value )
+void putHexMulti( int sc, uint64_t value )
 {
     system_call(WRITE,value,1,MULTI_MODE,sc,0);
 }

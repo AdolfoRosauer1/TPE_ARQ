@@ -14,9 +14,9 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             sys_write(rsi,rdx,rcx,r8);
             break;
         case READ:
-            return pollread(rsi,rdx,rcx,0xFFFFFFFF);
+            return pollread(rsi,(char*)rdx,rcx,0xFFFFFFFF);
         case POLL_READ:
-            return pollread(rsi,rdx,rcx,r8);
+            return pollread(rsi,(char*)rdx,rcx,r8);
         case CLEAR:
             ncClear();
             break; 

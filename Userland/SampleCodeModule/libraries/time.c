@@ -5,30 +5,30 @@ void printTime( int mode )
 {   
     if ( mode == 0 )
     {
-        putDec(getTime(HOURS));
-        print(":");
-        putDec(getTime(MINUTES));
+        (getTime(mode,0,HOURS));
+        (":");
+        (getTime(mode,0,MINUTES));
         print("-");
-        putDec(getTime(DAY));
+        (getTime(mode,0,DAY));
         print("/");
-        putDec(getTime(MONTH));
+        (getTime(mode,0,MONTH));
         print("/");
-        putDec(getTime(YEAR));
+        (getTime(mode,0,YEAR));
         putChar('\n');
     return;
     }else if ( mode == 1 || mode == 2 )
     {
         int sc = mode-1;
-        putDecMulti(sc,getTime(HOURS));
+        (getTime(mode,sc,HOURS));
         printMulti(sc,":");
-        putDecMulti(sc,getTime(MINUTES));
+        (getTime(mode,sc,MINUTES));
         printMulti(sc,"-");
-        putDecMulti(sc,getTime(DAY));
+        (getTime(mode,sc,DAY));
         printMulti(sc,"/");
-        putDecMulti(sc,getTime(MONTH));
+        (getTime(mode,sc,MONTH));
         printMulti(sc,"/");
-        putDecMulti(sc,getTime(YEAR));
-        printMulti(sc,'\n');
+        (getTime(mode,sc,YEAR));
+        printMulti(sc,"\n");
     }
     print("Invalid screen mode input\n");
     return;

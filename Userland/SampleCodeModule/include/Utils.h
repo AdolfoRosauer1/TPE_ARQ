@@ -25,10 +25,11 @@ void clear();
 unsigned char getChar();
 void scanf(char *buffer, int size);
 void print(char * string);
-uint8_t getTime(int descriptor);
+uint8_t getTime(int mode, int scr, int descriptor);
 
 int strlen( char * string );
 void strcpy( char * target, char * source, int len );
+unsigned long hexaStringToInt(char *s);
 void divide_string(char target[MAX_WORDS][MAX_LENGTH],char * string );
 int strcmp(char string1[], char string2[]);
 
@@ -41,8 +42,8 @@ int strcmp(char string1[], char string2[]);
 void putCharMulti( int sc, const char c );
 void printMulti( int sc, const char * string );
 void startMulti();
-putDecMulti( int sc, uint64_t value );
-putHexMulti( int sc, uint64_t value );
+void putDecMulti( int sc, uint64_t value );
+void putHexMulti( int sc, uint64_t value );
 
 
 #endif

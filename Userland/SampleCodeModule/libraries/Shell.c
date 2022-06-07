@@ -44,6 +44,12 @@ void getRegInfo(int mode)
         system_call(REG_INFO,mode,0,0,0,0);
 }
 
+void print_mem(int mode, int scr, char * param)
+{
+    unsigned long address = hexaStringToInt(param);
+    system_call(PRINT_MEM,mode,scr,address,0,0);
+}
+
 void exit_shell()
 {
     exit = 1;
@@ -216,7 +222,7 @@ void full_screen_infinite( int code )
 uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
 { // 3 modes --> 0 for fullscreen, 1 for left, 2 for right
     if ( mode == FULL_MD || mode == LEFT_MD || mode == RIGHT_MD )
-    {;
+    {
         switch (code)
         {
             case DIV:
@@ -239,8 +245,8 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
             case PRIME:
                 return primo_next();
             case PRINTM:
-                print_mem(mode,param);
-                break; // FALTA COMANDO DE PRINT MEMORY
+                print_mem(mode,((mode==FULL_MD)?0:mode-1),param);
+                break;
             case TIME:
                 printTime(mode);
                 break;
