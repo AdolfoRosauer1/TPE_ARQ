@@ -73,7 +73,7 @@ void scanf(char *buffer, int size) //missing backspace fix
     } while (1);
 }
 
-uint8_t getTime(int descriptor)
+uint8_t getTime(int mode, int descriptor)
 {
     return system_call(RTC,descriptor,0,0,0,0);
 }
@@ -122,16 +122,6 @@ void divide_string(char target[MAX_WORDS][MAX_LENGTH], char * string )
 
     for ( int i = 0 ; string[i] != 0 ; i++ )
     {
-        // if ( string[i] == ' ' )
-        // {
-        //     int len = i - start;
-        //     if ( len > 0 && len <= MAX_LENGTH && k < MAX_WORDS )
-        //     {
-        //         strcpy(target[k++],auxPtr,len);
-        //         auxPtr+=i;
-        //     }else {print("Invalid command arguments"); putChar('\n'); return;}
-        //     start = i+1;
-        // }
         if ( string[i] != ' ') 
             target[k][aux++]=string[i];
         else {target[k++][aux]=0;aux=0;}
@@ -143,36 +133,6 @@ void divide_string(char target[MAX_WORDS][MAX_LENGTH], char * string )
     return;
 
 }
-
-// void getCommand(char command[READBUF_LENGTH], char parameters[MAX_PARAMETERS][LENGTH_PARAMETERS], char readbuf[READBUF_LENGTH]) {
-//     int i, j, k;
-
-//     for(i=0, j=0; i<READBUF_LENGTH && readbuf[i]!=' '; i++){
-//             command[j++] = readbuf[i];
-//     }
-
-//     command[j] = 0;
-
-//     while(i<READBUF_LENGTH && readbuf[i]==' '){
-//         i++;
-//     }
-
-//     for(j=0, k=0; i<READBUF_LENGTH;) {
-//         if(k>=MAX_PARAMETERS || j>=LENGTH_PARAMETERS)
-//             return;
-//         if(readbuf[i]!=' ') {
-//             parameters[k][j++] = readbuf[i++];
-//         }
-//         else {
-//             parameters[k][j] = 0;
-//             k++;
-//             j=0;
-//             while(i<READBUF_LENGTH && readbuf[i]==' '){
-//                 i++;
-//             }
-//         }
-//     }
-// }
 
 
 void putCharMulti( int sc, const char c )

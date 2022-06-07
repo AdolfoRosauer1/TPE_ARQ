@@ -9,7 +9,7 @@
 #define SIZE 32
 
 void saveReg(uint64_t * regs);
-void printMemory(uint64_t argument);
-void getRegistersInfo();
+void printMemory(uint64_t mode, uint64_t sc, uint64_t start);
+void getRegistersInfo( uint64_t mode , uint64_t sc);
 
 #endif

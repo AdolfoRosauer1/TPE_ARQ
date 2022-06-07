@@ -25,6 +25,5 @@ uint64_t fibo_next(){
         else
             return (lastFibo1>lastFibo2)? lastFibo1:lastFibo2;
         return lastFibo1;
-    }
-    return (lastFibo1>lastFibo2)? lastFibo1:lastFibo2;  
+    } 
 }

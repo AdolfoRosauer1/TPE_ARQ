@@ -1,5 +1,5 @@
 #include <syscalls.h>
-
+#include <time.h>
 
 
 uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)
@@ -43,3 +43,15 @@ void sys_write( uint64_t toWrite, uint64_t writeType,  uint64_t mode, uint64_t s
             ncPrintHexMulti(screen,toWrite);
     }
 }
+
+void sys_rtc( uint64_t descriptor, uint64_t mode, uint64_t screen )
+{
+    if ( mode != MULTI_MODE )
+    {
+        ncPrintDec(getTime(descriptor));
+    }else
+    {
+        ncPrintDecMulti(screen,descriptor);
+    }
+}
+

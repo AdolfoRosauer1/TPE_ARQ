@@ -7,9 +7,9 @@ void divZero()
     int x = 1/0;
 }
 
-void invalidOpCode(int sc)
+void invalidOpCode()
 {
-    InvOpCodeExc(sc);
+    InvOpCodeExc();
 }
 
 void start_shell()
@@ -35,9 +35,13 @@ void start_shell()
     }
 }
 
-void getRegInfo(int sc)
+void getRegInfo(int mode)
 {
-    system_call(REG_INFO,0,0,0,0,0);
+    if ( mode != FULL_MD ){
+        int sc = mode-1;
+        system_call(REG_INFO,MULTI_MODE,sc,0,0,0);
+    }else
+        system_call(REG_INFO,mode,0,0,0,0);
 }
 
 void exit_shell()
@@ -193,7 +197,6 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
 void full_screen_infinite( int code )
 {
     uint64_t c = 0;
-    print("WOW DUDE THIS GONNA BE RAD!\n");
     if ( code == PRIME )
         start_prime();
     if ( code == FIBO )
@@ -213,12 +216,11 @@ void full_screen_infinite( int code )
 uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
 { // 3 modes --> 0 for fullscreen, 1 for left, 2 for right
     if ( mode == FULL_MD || mode == LEFT_MD || mode == RIGHT_MD )
-    {
-        int sc = mode;
+    {;
         switch (code)
         {
             case DIV:
-                divZero(sc);
+                divZero();
                 break;
             case EXITP:
                 exit_shell();
@@ -226,20 +228,21 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
             case FIBO:
                 return fibo_next();
             case HELP:
-                printHelp(sc);
+                printHelp(mode);
                 break;
             case INFOR:
-                getRegInfo(sc);
+                getRegInfo(mode);
                 break;
             case OPCD:
-                invalidOpCode(sc);
+                invalidOpCode();
                 break;
             case PRIME:
                 return primo_next();
             case PRINTM:
+                print_mem(mode,param);
                 break; // FALTA COMANDO DE PRINT MEMORY
             case TIME:
-                printTime(sc);
+                printTime(mode);
                 break;
             default:
                 print("invalid OPCODE \n");
