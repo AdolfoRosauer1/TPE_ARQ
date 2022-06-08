@@ -30,7 +30,7 @@ uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rc
             ncStartMulti();
             break;
         case PRINT_MEM:
-            printMemory(rdx,rcx,rsi);
+            printMemory(rsi,rdx,rcx);
             break;    
         default:
             break;

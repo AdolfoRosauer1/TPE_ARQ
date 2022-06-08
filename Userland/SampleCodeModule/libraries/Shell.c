@@ -245,7 +245,7 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
             case PRIME:
                 return primo_next();
             case PRINTM:
-                print_mem(mode,((mode==FULL_MD)?0:mode-1),param);
+                print_mem(mode,((mode==FULL_MD)? (0):(mode-1)),param);
                 break;
             case TIME:
                 printTime(mode);

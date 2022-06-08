@@ -1,5 +1,6 @@
 #include <syscalls.h>
-
+#define GMT -3
+#define HOUR 4
 
 uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)
 {
@@ -47,10 +48,24 @@ void sys_rtc( uint64_t descriptor, uint64_t mode, uint64_t screen )
 {
     if ( mode != MULTI_MODE )
     {
-        ncPrintDec(getTime(descriptor));
+        if ( descriptor != HOUR )
+            ncPrintDec(getTime(descriptor));
+        else
+        {
+            int rt = getTime(descriptor);
+            ( (rt + GMT) < 0 )? (rt=23+(rt+GMT)):(rt=(rt+GMT));
+            ncPrintDec(rt);
+        }
     }else
     {
-        ncPrintDecMulti(screen,descriptor);
+        if ( descriptor != HOUR )
+            ncPrintDecMulti(screen,getTime(descriptor));
+        else
+        {
+            int rt = getTime(descriptor);
+            ( (rt + GMT) <= 0 )? (rt=23+(rt+GMT)):(rt=(rt+GMT));
+            ncPrintDecMulti(screen,rt);
+        }
     }
 }
 

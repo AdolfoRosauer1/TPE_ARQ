@@ -7,6 +7,7 @@
         "random": "c",
         "optional": "c",
         "cstring": "c",
-        "fibonacci.h": "c"
+        "fibonacci.h": "c",
+        "interrupts.h": "c"
     }
 }
