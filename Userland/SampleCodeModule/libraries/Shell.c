@@ -17,6 +17,7 @@ void start_shell()
     clear();
     print("Welcome to BocaOS");
     putChar('\n');
+    print("Use help to display available commands\n");
     char buffer[MAX_SIZE] = {0};
     while (!exit)
     {
@@ -24,12 +25,6 @@ void start_shell()
         scanf(buffer,MAX_SIZE);
         char command[MAX_WORDS][MAX_LENGTH];
         divide_string(command,buffer);
-
-        int i = 0;
-        while( command[i][0] != 0 ){
-            print(command[i++]);
-            putChar('\n');
-        }
 
         command_handler(command);      
     }
@@ -72,7 +67,6 @@ int get_command_code( char command[MAX_LENGTH] )
         cmp = strcmp(command,commandList[index]);
         count++;
     } while ( count < INSTRUCTIONS );
-    print("Invalid OPCODE");
     return -1;
 }
 
@@ -139,11 +133,12 @@ void unpipe_my_pipe()
 }
 
 void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_LENGTH] )
-{ // while(1) que distribuye los recursos entre las apps y sus impresiones a pantalla
-    int pipeExit = 0;
+{ 
     int app1_dispatched = 0;
     int app2_dispatched = 0;
     startMulti();
+    printMulti(0,"Use ESC to exit pipe mode\n");
+    printMulti(1,"Use ESC to exit pipe mode\n");
     if ( app1 != FIBO && app1 != PRIME ){
         command_dispatcher(LEFT_MD,app1,param1);
         app1_dispatched = 1;
@@ -160,7 +155,7 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
         uint64_t c = 0;
         while( 1 )
         {
-            system_call(POLL_READ,1,&c,1,1000,0); //KBD_IN es 1
+            system_call(POLL_READ,1,&c,1,100,0); //KBD_IN es 1
             if ( c == 1 )
             {
                 unpipe_my_pipe();
@@ -197,7 +192,16 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
             }
         }
     }
-    unpipe_my_pipe();
+    uint64_t c = 0;
+    while(1)
+    {
+        system_call(POLL_READ,1,&c,1,100,0); //KBD_IN es 1
+        if ( c == 1 )
+        {
+            unpipe_my_pipe();
+            return;
+        }
+    }
 }
 
 void full_screen_infinite( int code )
@@ -251,7 +255,6 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
                 printTime(mode);
                 break;
             default:
-                print("invalid OPCODE \n");
                 break;
         }
     }else
