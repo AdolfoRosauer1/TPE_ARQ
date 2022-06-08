@@ -255,7 +255,6 @@ uint64_t command_dispatcher( int mode, int code, char param[MAX_LENGTH] )
                 printTime(mode);
                 break;
             default:
-                print("invalid OPCODE \n");
                 break;
         }
     }else
