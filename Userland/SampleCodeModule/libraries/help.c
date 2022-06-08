@@ -4,7 +4,7 @@
 void printHelp( int mode ){
     if ( mode == 0 )
     {
-    char *stringout = "In the following list are all the commands that you can use \nincluding a short description of each and what they do. \n";
+    char *stringout = "In the following list are all the commands that you can use \nincluding a short description of each and what they do. \n\n";
     print(stringout);
 
     print("help -- shows the list of commands being able to be executed.\n");
@@ -17,6 +17,7 @@ void printHelp( int mode ){
     print("fibonacci -- prints the fibonacci series starting with 1\n");
     print("com1 | com2 -- the use of the | caracter divides the screen in half \n and executes each command on the respective part of the screen.\n");
     print("exit -- exits the program\n");
+    print("Use ESC to exit pipe and infinite print apps");
     return;
     }else if ( mode == 1 || mode == 2)
     {

@@ -137,6 +137,8 @@ void pipe_handler( int app1, int app2, char param1[MAX_LENGTH], char param2[MAX_
     int app1_dispatched = 0;
     int app2_dispatched = 0;
     startMulti();
+    printMulti(0,"Use ESC to exit pipe mode\n");
+    printMulti(1,"Use ESC to exit pipe mode\n");
     if ( app1 != FIBO && app1 != PRIME ){
         command_dispatcher(LEFT_MD,app1,param1);
         app1_dispatched = 1;
