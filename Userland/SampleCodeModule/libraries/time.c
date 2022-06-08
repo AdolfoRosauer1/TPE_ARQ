@@ -1,4 +1,5 @@
 #include <time.h>
+#define MULTI_MODE 1
 
 
 void printTime( int mode )
@@ -19,15 +20,15 @@ void printTime( int mode )
     }else if ( mode == 1 || mode == 2 )
     {
         int sc = mode-1;
-        (getTime(mode,sc,HOURS));
+        (getTime(MULTI_MODE,sc,HOURS));
         printMulti(sc,":");
-        (getTime(mode,sc,MINUTES));
+        (getTime(MULTI_MODE,sc,MINUTES));
         printMulti(sc,"-");
-        (getTime(mode,sc,DAY));
+        (getTime(MULTI_MODE,sc,DAY));
         printMulti(sc,"/");
-        (getTime(mode,sc,MONTH));
+        (getTime(MULTI_MODE,sc,MONTH));
         printMulti(sc,"/");
-        (getTime(mode,sc,YEAR));
+        (getTime(MULTI_MODE,sc,YEAR));
         printMulti(sc,"\n");
         return;
     }
