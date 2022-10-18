@@ -5,6 +5,7 @@
 #include <naiveConsole.h>
 #include <idtLoader.h>
 #include <exception.h>
+#include <video.h>
 
 extern uint8_t text;
 extern uint8_t rodata;

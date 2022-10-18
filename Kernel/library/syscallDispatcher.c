@@ -11,7 +11,7 @@
 uint64_t syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9) {
     switch (rdi) {
         case WRITE:
-            sys_write(rsi,rdx,rcx,r8);
+            sys_write((char*)rsi,rdx,rcx,r8);
             break;
         case READ:
             return pollread(rsi,(char*)rdx,rcx,0xFFFFFFFF);

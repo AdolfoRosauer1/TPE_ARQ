@@ -16,7 +16,7 @@ unsigned char getChar()
 void putChar(char c)
 {
     if(c != 0)
-        system_call(WRITE,c,0,0,0,0);
+        system_call(WRITE,&c,0,0,0,0);
 }
 
 void putDec(uint64_t num)

@@ -5,6 +5,7 @@
 #include <keyboard.h>
 #include <time.h>
 #include <naiveConsole.h>
+#include <video.h>
 
 #define STD_IN 0
 

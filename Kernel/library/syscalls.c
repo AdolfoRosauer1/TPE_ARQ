@@ -19,12 +19,12 @@ uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)
     return read;
 }
 
-void sys_write( uint64_t toWrite, uint64_t writeType,  uint64_t mode, uint64_t screen )
+void sys_write( char * toWrite, uint64_t writeType,  uint64_t mode, uint64_t screen )
 {
     if (writeType==0)
     {
         if ( mode != MULTI_MODE )
-            ncPrintChar((char)toWrite);
+            drawString(toWrite,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
         else
             ncPrintCharMulti(screen,(char)toWrite);
     }

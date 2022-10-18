@@ -1,5 +1,5 @@
 #include <time.h>
-
+#include <video.h>
 
 static unsigned long ticks = 0;
 
