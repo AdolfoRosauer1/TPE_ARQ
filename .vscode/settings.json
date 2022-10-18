@@ -8,6 +8,7 @@
         "optional": "c",
         "cstring": "c",
         "fibonacci.h": "c",
-        "interrupts.h": "c"
+        "interrupts.h": "c",
+        "naiveconsole.h": "c"
     }
 }

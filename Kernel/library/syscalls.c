@@ -19,26 +19,26 @@ uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout)
     return read;
 }
 
-void sys_write( char * toWrite, uint64_t writeType,  uint64_t mode, uint64_t screen )
+void sys_write( uint64_t toWrite, uint64_t writeType,  uint64_t mode, uint64_t screen )
 {
     if (writeType==0)
     {
         if ( mode != MULTI_MODE )
-            drawString(toWrite,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
+            drawString((char*)toWrite,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
         else
             ncPrintCharMulti(screen,(char)toWrite);
     }
     else if (writeType==1)
     {
         if ( mode != MULTI_MODE )
-            ncPrintDec(toWrite);
+            drawDec(toWrite);
         else
             ncPrintDecMulti(screen,toWrite);
     }
     else if (writeType==2)
     {
         if ( mode != MULTI_MODE )
-            ncPrintHex(toWrite);
+            drawHex(toWrite);
         else
             ncPrintHexMulti(screen,toWrite);
     }
@@ -49,12 +49,12 @@ void sys_rtc( uint64_t descriptor, uint64_t mode, uint64_t screen )
     if ( mode != MULTI_MODE )
     {
         if ( descriptor != HOUR )
-            ncPrintDec(getTime(descriptor));
+            drawDec(getTime(descriptor));
         else
         {
             int rt = getTime(descriptor);
             ( (rt + GMT) < 0 )? (rt=23+(rt+GMT)):(rt=(rt+GMT));
-            ncPrintDec(rt);
+            drawDec(rt);
         }
     }else
     {

@@ -1,5 +1,6 @@
 #include <mem.h>
 #include <syscalls.h>
+#include <video.h>
 
 uint64_t * backup;
 int hasRegisters = 0;
@@ -8,7 +9,7 @@ void getRegistersInfo( uint64_t mode , uint64_t sc){
     if ( mode != MULTI_MODE )
     {
         if(hasRegisters == 0){
-            ncPrint("Registers arent saved, press the CTRL key\n");
+            drawString("Registers arent saved, press the CTRL key\n",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
             return;
         }
 
@@ -16,14 +17,14 @@ void getRegistersInfo( uint64_t mode , uint64_t sc){
         
         char str[8] = {'0'};
         for(int i=0; i<REGISTERS_COUNT; i++){
-            ncPrint(regs[i]);
-            ncPrint(": ");
+            drawString(regs[i],DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
+            drawString(": ",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
             uint32_t dig = uintToBase(backup[i], str, 16);
         for(int i=0; i < 8-dig; i++){
-            ncPrintChar('0');
+            drawString("0",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
         }
-            ncPrint(str);
-            ncPrintChar('\n');
+            drawString(str,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
+            drawString("\n",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
         }
     }else
     {
@@ -64,13 +65,13 @@ void printMemory(uint64_t mode, uint64_t sc, uint64_t start){
         for (int i = 0; i < SIZE; i++){
             uint32_t dig = uintToBase(address[i], buffer, 16);
             for(int i=0; i < 2-dig; i++){
-            ncPrintChar('0');
+            drawString("0",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
         }
-            ncPrint(buffer);
-            ncPrintChar(' ');
+            drawString(buffer,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
+            drawString(" ",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
         }
         
-        ncPrintChar('\n');
+        drawString("\n",DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
     }else
     {
         char buffer[SIZE] = {'0'};

@@ -2,6 +2,9 @@
 #ifndef video_H
 #define video_H
 
+#include <stdint.h>
+
+
 #define WIDTH 1024
 #define HEIGHT 768
 #define DEFAULT_BG_COLOR 0x000000
@@ -14,4 +17,7 @@ void clearScreen();
 void newLine();
 void deleteChar();
 void scrollDown();
+void drawBase(uint64_t value, uint32_t base);
+void drawHex(uint64_t value);
+void drawDec(uint64_t value);
 #endif
