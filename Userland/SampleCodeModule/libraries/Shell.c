@@ -70,60 +70,28 @@ int get_command_code( char command[MAX_LENGTH] )
     return -1;
 }
 
-void command_handler( char input[MAX_WORDS][MAX_LENGTH] )
+void command_handler(char input[MAX_WORDS][MAX_LENGTH])
 {
-    int code1 = get_command_code( input[0] );
-    if ( code1 != -1 && code1 != PRINTM )
+    int code1 = get_command_code(input[0]);
+    if (code1 != -1 && code1 != PRINTM)
     {
-        if ( strcmp(input[1],"|") == 0 )
-        { //falta una parser function que permita determinar donde estan los args de app1 antes del |, existen casos donde no siempre la app2 esta en input[2]
-            int code2 = get_command_code(input[2]);
-            if ( code2 != -1 )
-            {
-                if ( code2 == PRINTM )
-                    pipe_handler(code1,code2,EMPTY,input[3]);
-                else
-                    pipe_handler(code1,code2,EMPTY,EMPTY);
-            }else
-            {
-                print("Invalid use of pipe: Invalid command\n");
-            }
-        
-        }else{ //normal mode
-            if ( strlen(input[1]) == 0 )
-            {
-                if ( code1 != FIBO && code1 != PRIME )
-                    command_dispatcher(FULL_MD,code1,EMPTY);
-                else
-                    full_screen_infinite(code1);
-            } 
+        if (strlen(input[1]) == 0)
+        {
+            if (code1 != FIBO && code1 != PRIME)
+                command_dispatcher(FULL_MD, code1, EMPTY);
             else
-                print("Invalid argument\n");  
+                full_screen_infinite(code1);
         }
-    }else if ( code1 == PRINTM )
+        else
+            print("Invalid argument\n");
+    }
+    else if (code1 == PRINTM)
     {
-        if ( strcmp(input[2],"|") == 0 )
-        {
-            int code2 = get_command_code(input[3]);
-            if ( code2 != -1 )
-            {
-                if ( code2 == PRINTM )
-                    pipe_handler(code1,code2,input[1],input[4]);
-                else
-                    pipe_handler(code1,code2,input[1],EMPTY);
-            }else
-            {
-                print("Invalid use of pipe: Invalid command\n");
-            }
-        }else
-        {
-            command_dispatcher(FULL_MD,code1,input[1]);
-        }
+        command_dispatcher(FULL_MD, code1, input[1]);
     }
     else
         print("Invalid input \n");
     return;
-    
 }
 
 void unpipe_my_pipe()
@@ -213,7 +181,7 @@ void full_screen_infinite( int code )
         start_fibo();
     while( 1 )
     {
-    uint64_t toPrint = command_dispatcher(0,code,EMPTY);
+    uint64_t toPrint = command_dispatcher(FULL_MD,code,EMPTY);
     putDec(toPrint);
     print("\n");
     system_call(POLL_READ,1,&c,1,100,0); //KBD_IN es 1
