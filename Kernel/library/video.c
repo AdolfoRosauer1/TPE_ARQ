@@ -49,6 +49,10 @@ static struct vbe_mode_info_structure *screenData = (void *)0x5C00;
 static int currentX = 0;
 static int currentY = 0;
 unsigned int rows = 0;
+static int size = NORMAL;
+static char saveScreen[48 * 128] = {0};
+static int currentB = 0;
+static int reDraw = 0;
 
 void drawPixel(int y, int x, int color)
 {
@@ -68,17 +72,21 @@ void drawPixel(int y, int x, int color)
 void drawChar(char c, int x, int y, int font_color, int background_color)
 {
     char *charMap = getCharMap(c);
+    if (!reDraw)
+    {
+        saveScreen[currentB++] = c;
+    }
 
     if (x + (2 * CHAR_WIDTH) >= screenData->width)
     { // si llega al final de la linea
-        currentY += CHAR_HEIGHT / 2;
+        currentY += size * CHAR_HEIGHT / 2;
         rows++;
         newLine();
         currentX += CHAR_WIDTH * 2;
     }
     if (c == '\n')
     { // si es un enter
-        currentY += CHAR_HEIGHT / 2;
+        currentY += size * CHAR_HEIGHT / 2;
         rows = 0;
         newLine();
         currentX -= CHAR_WIDTH;
@@ -89,12 +97,12 @@ void drawChar(char c, int x, int y, int font_color, int background_color)
         deleteChar();
         return;
     }
-
-    for (int i = 0; i < CHAR_HEIGHT; i++)
+    int k = 0;
+    for (int i = 0; i < size * CHAR_HEIGHT; i++)
     {
         for (int j = 0; j < CHAR_WIDTH; j++)
         {
-            unsigned int point = ((charMap[i] >> j) & 0x01);
+            unsigned int point = ((charMap[k] >> j) & 0x01);
             if (point == 0)
             {
                 drawPixel(y + i, x + CHAR_WIDTH - j, background_color);
@@ -104,6 +112,10 @@ void drawChar(char c, int x, int y, int font_color, int background_color)
                 drawPixel(y + i, x + CHAR_WIDTH - j, font_color);
             }
         }
+        if (i % size == 0)
+        {
+            k++;
+        }
     }
 }
 
@@ -111,6 +123,7 @@ void drawString(char *s, int font_color, int background_color)
 {
     for (int i = 0; s[i] != 0; i++)
     {
+
         drawChar(s[i], currentX, currentY, font_color, background_color);
         if (s[i] != '\b')
             currentX += CHAR_WIDTH;
@@ -119,14 +132,14 @@ void drawString(char *s, int font_color, int background_color)
 
 void newLine()
 {
-    if (HEIGHT - currentY <= CHAR_HEIGHT)
+    if (HEIGHT - currentY <= size * CHAR_HEIGHT)
     {
-        currentY -= CHAR_HEIGHT / 2;
+        currentY -= size * CHAR_HEIGHT / 2;
         scrollDown();
     }
     else
     {
-        currentY += CHAR_HEIGHT / 2;
+        currentY += size * CHAR_HEIGHT / 2;
     }
     currentX = 0;
 }
@@ -156,7 +169,7 @@ void deleteChar()
         {
             return;
         }
-        currentY -= CHAR_HEIGHT;
+        currentY -= size * CHAR_HEIGHT;
         rows--;
         currentX = WIDTH - (2 * CHAR_WIDTH);
     }
@@ -172,7 +185,7 @@ void scrollDown()
 
     while (x <= HEIGHT * WIDTH / 2) // 1024*768/2== HEIGHT * WIDTH /2
     {
-        vidmem[x] = vidmem[x + (CHAR_HEIGHT * screenData->width / 8) * 3]; /* Valid only for 1024x768x32bpp */
+        vidmem[x] = vidmem[x + (size * CHAR_HEIGHT * screenData->width / 8) * 3]; /* Valid only for 1024x768x32bpp */
         x = x + 1;
     }
 }
@@ -192,4 +205,13 @@ void drawBase(uint64_t value, uint32_t base)
     char buffer[1024];
     uintToBase(value, buffer, base);
     drawString(buffer, DEFAULT_FONT_COLOR, DEFAULT_BG_COLOR);
+}
+
+void changeFontSize(uint16_t new_size)
+{
+    clearScreen();
+    size = new_size;
+    reDraw = 1;
+    drawString(saveScreen,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
+    reDraw = 0;
 }

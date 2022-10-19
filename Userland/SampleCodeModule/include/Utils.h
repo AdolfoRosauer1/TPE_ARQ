@@ -11,6 +11,11 @@
 #define MONTH 8
 #define YEAR 9
 
+//Para fonts
+#define SMALL 1
+#define NORMAL 2
+#define LARGE 3
+
 #define BACKSPACE '\b'
 
 #define STD_IN 0
@@ -32,6 +37,7 @@ void strcpy( char * target, char * source, int len );
 unsigned long hexaStringToInt(char *s);
 void divide_string(char target[MAX_WORDS][MAX_LENGTH],char * string );
 int strcmp(char string1[], char string2[]);
+void changeFontSize(char * new_size);
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
 #define IS_LOWER(c) ((c) >= 'a' && (c) <= 'z')

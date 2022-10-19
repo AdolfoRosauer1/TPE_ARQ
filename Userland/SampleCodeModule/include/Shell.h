@@ -9,10 +9,10 @@
 
 #define MAX_SIZE 50
 
-#define INSTRUCTIONS 9
+#define INSTRUCTIONS 10
 
 static char commandList[INSTRUCTIONS][MAX_LENGTH] = {
-    "divzero","exit","fibonacci","help","inforeg","opcode","primos","printmem","time"
+    "divzero","exit","fibonacci","help","inforeg","opcode","primos","printmem","time","font"
     };
 #define DIV 0
 #define EXITP 1
@@ -23,6 +23,7 @@ static char commandList[INSTRUCTIONS][MAX_LENGTH] = {
 #define PRIME 6
 #define PRINTM 7
 #define TIME 8
+#define CHANGE_FONT 9
 
 #define FULL_MD 0
 #define LEFT_MD 1
