@@ -2,13 +2,15 @@
 
 static unsigned int running = 0;
 
-static Player player1 = {{1, 1}, BLUE, {1, 0}};
+static int player1[] = {35,35,0,1,BLUE};
+static int player2[] = {55,55,0,1,ORANGE};
+
 
 void drawRectangle()
 {
-    for (int i = HEIGHT / 8; i < HEIGHT * 7 / 8; i++)
+    for (int i = HEIGHT/8; i < HEIGHT*7/8; i++)
     {
-        for (int k = WIDTH / 8; k < WIDTH * 7 / 8; k++)
+        for (int k = WIDTH/8; k < WIDTH*7/8; k++)
         {
             drawPixel(i, k, GREY);
         }

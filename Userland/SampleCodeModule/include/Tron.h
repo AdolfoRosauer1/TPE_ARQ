@@ -7,19 +7,11 @@
 
 #define WIDTH 1024
 #define HEIGHT 768
+#define AREA 48
 
 #define ENTER 0x1C
 
-typedef struct Point {
-    int x;
-    int y;
-} Point;
-
-typedef struct Player {
-    Point point;
-    int color;
-    Point direction;
-} Player;
+static int area[AREA][2*AREA] = {0};
 
 void start_tron();
 void update_tron();

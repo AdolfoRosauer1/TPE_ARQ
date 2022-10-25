@@ -24,6 +24,7 @@
 #define MAX_WORDS 5
 #define MAX_LENGTH 20
 #define CHAR_WIDTH 8
+#define CHAR_HEIGHT 16
 
 void putChar(char c);
 void putCharPos(char c, int x, int y);
