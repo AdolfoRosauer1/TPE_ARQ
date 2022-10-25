@@ -54,35 +54,31 @@ void exit_shell()
 
 int get_command_code(char command[MAX_LENGTH])
 {
-    // int index = (INSTRUCTIONS - 1) / 2;
-    // int cmp = strcmp(command, commandList[index]);
-    // int count = 1;
-    // do
-    // {
-    //     if (cmp == 0)
-    //     {
-    //         putDec(index);
-    //         print("\n");
-    //         return index;
-    //     }
-    //     index += cmp;
-    //     (index < 0) ? (index = 0) : (index = index);
-    //     (index > INSTRUCTIONS) ? (index = INSTRUCTIONS) : (index = index);
-    //     cmp = strcmp(command, commandList[index]);
-    //     count++;
-    // } while (count < INSTRUCTIONS);
-    // putDec(index);
-    // print("\n");
-    for (int i = 0; i < INSTRUCTIONS; i++)
+    int index = (INSTRUCTIONS - 1) / 2;
+    int cmp = strcmp(command, commandList[index]);
+    int count = 1;
+    do
     {
-        int cmp = strcmp(command,commandList[i]);
         if (cmp == 0)
         {
-            return i;
+            return index;
         }
+        index += cmp;
+        (index < 0) ? (index = 0) : (index = index);
+        (index > INSTRUCTIONS) ? (index = INSTRUCTIONS) : (index = index);
+        cmp = strcmp(command, commandList[index]);
+        count++;
+    } while (count < INSTRUCTIONS);
+
+    // for (int i = 0; i < INSTRUCTIONS; i++)
+    // {
+    //     int cmp = strcmp(command,commandList[i]);
+    //     if (cmp == 0)
+    //     {
+    //         return i;
+    //     }
         
-    }
-    
+    // }
     return -1;
 }
 
@@ -261,6 +257,8 @@ uint64_t command_dispatcher(int mode, int code, char param[MAX_LENGTH])
             break;
         case CHANGE_FONT:
             changeFontSize(param);
+        case TRON:
+            start_tron();
         default:
             break;
         }

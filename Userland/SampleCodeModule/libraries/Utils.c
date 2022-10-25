@@ -20,6 +20,12 @@ void putChar(char c)
         system_call(WRITE, &c, 0, 0, 0, 0);
 }
 
+void putCharPos(char c, int x, int y)
+{
+    if (c != 0)
+        system_call(WRITE, &c, 3, x, y, 0);
+}
+
 void putDec(uint64_t num)
 {
     system_call(WRITE, num, 1, 0, 0, 0);
@@ -41,6 +47,16 @@ void print(char *string)
     {
         putChar(*string);
         string++;
+    }
+}
+
+void printPos(char * string, int x, int y)
+{
+    while (*string != 0)
+    {
+        putCharPos(*string,x,y);
+        string++;
+        x+=CHAR_WIDTH;
     }
 }
 
@@ -173,6 +189,16 @@ void divide_string(char target[MAX_WORDS][MAX_LENGTH], char *string)
         target[k][0] = 0;
 
     return;
+}
+
+void clearScreen()
+{
+    system_call(WRITE, 0, 5, 0, 0, 0);
+}
+
+void drawPixel(int x, int y, int color)
+{
+    system_call(WRITE,0,4,x,y,color);
 }
 
 void putCharMulti(int sc, const char c)

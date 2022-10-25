@@ -23,6 +23,6 @@
 #define FONT_SIZE 9
 
 uint64_t pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout);
-void sys_write( uint64_t toWrite, uint64_t writeType,  uint64_t mode, uint64_t screen );
+void sys_write(uint64_t toWrite, uint64_t writeType, uint64_t x, uint64_t y, uint64_t color);
 
 #endif

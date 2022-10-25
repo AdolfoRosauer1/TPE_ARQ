@@ -19,17 +19,21 @@
 #define BACKSPACE '\b'
 
 #define STD_IN 0
+#define KBD_IN 1
 
 #define MAX_WORDS 5
 #define MAX_LENGTH 20
+#define CHAR_WIDTH 8
 
 void putChar(char c);
+void putCharPos(char c, int x, int y);
 void putDec(uint64_t num);
 void putHex(uint64_t num);
 void clear();
 unsigned char getChar();
 void scanf(char *buffer, int size);
 void print(char * string);
+void printPos(char * string, int x, int y);
 uint8_t getTime(int mode, int scr, int descriptor);
 
 int strlen( char * string );
@@ -38,6 +42,8 @@ unsigned long hexaStringToInt(char *s);
 void divide_string(char target[MAX_WORDS][MAX_LENGTH],char * string );
 int strcmp(char string1[], char string2[]);
 void changeFontSize(char * new_size);
+void clearScreen();
+void drawPixel(int x, int y, int color);
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
 #define IS_LOWER(c) ((c) >= 'a' && (c) <= 'z')

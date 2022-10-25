@@ -97,12 +97,12 @@ void drawChar(char c, int x, int y, int font_color, int background_color)
         deleteChar();
         return;
     }
-    int k = 0;
+    int h = 0;
     for (int i = 0; i < size * CHAR_HEIGHT; i++)
     {
         for (int j = 0; j < CHAR_WIDTH; j++)
         {
-            unsigned int point = ((charMap[k] >> j) & 0x01);
+            unsigned int point = ((charMap[h] >> j) & 0x01);
             if (point == 0)
             {
                 drawPixel(y + i, x + CHAR_WIDTH - j, background_color);
@@ -114,7 +114,7 @@ void drawChar(char c, int x, int y, int font_color, int background_color)
         }
         if (i % size == 0)
         {
-            k++;
+            h++;
         }
     }
 }
@@ -123,11 +123,22 @@ void drawString(char *s, int font_color, int background_color)
 {
     for (int i = 0; s[i] != 0; i++)
     {
-
         drawChar(s[i], currentX, currentY, font_color, background_color);
         if (s[i] != '\b')
             currentX += CHAR_WIDTH;
     }
+}
+
+void drawStringWithPos(char *s, int x, int y, int font_color, int background_color)
+{
+    reDraw = 1;
+    for (int i = 0; s[i] != 0; i++)
+    {
+        drawChar(s[i], x, y, font_color, background_color);
+        if (s[i] != '\b')
+            x += CHAR_WIDTH;
+    }
+    reDraw = 0;
 }
 
 void newLine()
@@ -146,6 +157,7 @@ void newLine()
 
 void clearScreen()
 {
+    reDraw = 1;
     for (int i = 0; i < HEIGHT; i++)
     {
         for (int j = 0; j < WIDTH; j++)
@@ -155,6 +167,7 @@ void clearScreen()
     }
     currentX = 0;
     currentY = 0;
+    reDraw = 0;
 }
 
 void deleteChar()
@@ -187,7 +200,7 @@ void scrollDown()
     {
         vidmem[x] = vidmem[x + (size * CHAR_HEIGHT * screenData->width / 8) * 3]; /* Valid only for 1024x768x32bpp */
         x = x + 1;
-    }
+    }    
 }
 
 void drawDec(uint64_t value)
@@ -212,6 +225,6 @@ void changeFontSize(uint16_t new_size)
     clearScreen();
     size = new_size;
     reDraw = 1;
-    drawString(saveScreen,DEFAULT_FONT_COLOR,DEFAULT_BG_COLOR);
+    drawString(saveScreen, DEFAULT_FONT_COLOR, DEFAULT_BG_COLOR);
     reDraw = 0;
 }

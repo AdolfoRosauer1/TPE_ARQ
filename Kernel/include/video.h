@@ -15,6 +15,7 @@
 
 void drawPixel(int x, int y, int color);
 void drawChar(char c, int x, int y, int font_color,int background_color);
+void drawStringWithPos(char *s, int x, int y, int font_color, int background_color);
 void drawString(char * s, int font_color, int background_color);
 void clearScreen();
 void newLine();
