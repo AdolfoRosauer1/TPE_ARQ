@@ -33,5 +33,5 @@ void drawRectangle();
 void initialize_players();
 void draw_bike(int x, int y, int color);
 void update_direction( int direc );
-void wall_hit();
+int wall_hit();
 void draw_wall(int x, int y, int color);
