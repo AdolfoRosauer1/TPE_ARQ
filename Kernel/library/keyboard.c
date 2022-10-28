@@ -1,5 +1,6 @@
 #include <keyboard.h>
 #include <interrupts.h>
+#include <video.h>
 
 static uint8_t buffer[MAX_SIZE] = {0};
 static unsigned int buffer_size = 0;
