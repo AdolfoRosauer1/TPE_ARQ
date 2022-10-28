@@ -22,12 +22,16 @@
 #define DOWN_KEY 0x50
 #define LEFT_KEY 0x4B
 #define RIGHT_KEY 0x4D
+#define ESCAPE 0
 
 
-static int area[AREAY][AREAX] = {0};
+static int area[AREAY][AREAX];
 
 void start_tron();
 int update_tron();
 void drawRectangle();
 void initialize_players();
 void draw_bike(int x, int y, int color);
+void update_direction( int direc );
+void wall_hit();
+void draw_wall(int x, int y, int color);
