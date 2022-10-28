@@ -34,7 +34,7 @@ void start_tron()
     running = 1;
     while (running)
     {
-        system_call(POLL_READ, KBD_IN, &c, 1, 250, 0);
+        system_call(POLL_READ, KBD_IN, &c, 1, 150, 0);
 
         update_direction(c);
 
