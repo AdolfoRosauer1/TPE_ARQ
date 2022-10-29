@@ -1,6 +1,6 @@
 #include <time.h>
 #include <video.h>
-
+#include <speaker.h>
 static unsigned long ticks = 0;
 
 void timer_handler() {

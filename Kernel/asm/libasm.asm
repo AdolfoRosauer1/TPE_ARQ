@@ -4,6 +4,8 @@ GLOBAL keyboardStatus
 GLOBAL getRTC
 GLOBAL saveRegisterInfo
 GLOBAL getSP
+GLOBAL outb
+GLOBAL inb
 
 EXTERN saveReg
 
@@ -104,6 +106,17 @@ getRTC:
     
     sti
     ret
+
+outb:
+	mov rdx, rdi
+	mov rax, rsi
+	out dx, al
+	ret
+
+inb:
+	mov rdx, rdi
+	in al, dx
+	ret
 
 
 section .bss

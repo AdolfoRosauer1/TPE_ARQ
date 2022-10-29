@@ -72,10 +72,10 @@ void drawPixel(int y, int x, int color)
 void drawChar(char c, int x, int y, int font_color, int background_color)
 {
     char *charMap = getCharMap(c);
-    if (!reDraw)
-    {
-        saveScreen[currentB++] = c;
-    }
+    // if (!reDraw)
+    // {
+    //     saveScreen[currentB++] = c;
+    // }
 
     if (x + (2 * CHAR_WIDTH) >= screenData->width)
     { // si llega al final de la linea
@@ -224,7 +224,7 @@ void changeFontSize(uint16_t new_size)
 {
     clearScreen();
     size = new_size;
-    reDraw = 1;
-    drawString(saveScreen, DEFAULT_FONT_COLOR, DEFAULT_BG_COLOR);
-    reDraw = 0;
+    // reDraw = 1;
+    // drawString(saveScreen, DEFAULT_FONT_COLOR, DEFAULT_BG_COLOR);
+    // reDraw = 0;
 }

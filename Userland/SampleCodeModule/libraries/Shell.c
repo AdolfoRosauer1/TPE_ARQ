@@ -257,8 +257,10 @@ uint64_t command_dispatcher(int mode, int code, char param[MAX_LENGTH])
             break;
         case CHANGE_FONT:
             changeFontSize(param);
+            break;
         case TRON:
             start_tron();
+            break;
         default:
             break;
         }
