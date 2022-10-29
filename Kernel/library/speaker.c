@@ -38,3 +38,9 @@ void nosound()
 
     outb(0x61, tmp);
 }
+
+void beep(int nFrequence, int time){
+    play_sound(nFrequence);
+    wait(time);
+    nosound();
+}

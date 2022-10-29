@@ -12,6 +12,7 @@
 #define MULTI_START 7
 #define PRINT_MEM 8
 #define FONT_SIZE 9
+#define BEEP 10
 
 
 uint64_t system_call(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);

@@ -9,6 +9,7 @@
         "cstring": "c",
         "fibonacci.h": "c",
         "interrupts.h": "c",
-        "naiveconsole.h": "c"
+        "naiveconsole.h": "c",
+        "tron.h": "c"
     }
 }

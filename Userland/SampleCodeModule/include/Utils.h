@@ -57,6 +57,6 @@ void printMulti( int sc, const char * string );
 void startMulti();
 void putDecMulti( int sc, uint64_t value );
 void putHexMulti( int sc, uint64_t value );
-
+void beep(int frequency, int time);
 
 #endif

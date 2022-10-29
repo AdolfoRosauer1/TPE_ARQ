@@ -50,13 +50,13 @@ void print(char *string)
     }
 }
 
-void printPos(char * string, int x, int y)
+void printPos(char *string, int x, int y)
 {
     while (*string != 0)
     {
-        putCharPos(*string,x,y);
+        putCharPos(*string, x, y);
         string++;
-        x+=CHAR_WIDTH;
+        x += CHAR_WIDTH;
     }
 }
 
@@ -198,7 +198,7 @@ void clearScreen()
 
 void drawPixel(int x, int y, int color)
 {
-    system_call(WRITE,0,4,x,y,color);
+    system_call(WRITE, 0, 4, x, y, color);
 }
 
 void putCharMulti(int sc, const char c)
@@ -247,4 +247,9 @@ void changeFontSize(char *new_size)
     }
     else
         print("Error: addmited size are small, normal, large\n");
+}
+
+void beep(int frequency, int time)
+{
+    system_call(BEEP, frequency, time, 0, 0, 0);
 }
