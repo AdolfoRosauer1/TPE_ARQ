@@ -14,16 +14,22 @@
 #define OFFSETY (HEIGHT / 8)
 
 #define ENTER 0x1C
+#define ESCAPE 0x01
+
 #define W_KEY 0x11
 #define A_KEY 0x1E
 #define S_KEY 0x1F
 #define D_KEY 0x20
+
 #define UP_KEY 0x48
 #define DOWN_KEY 0x50
 #define LEFT_KEY 0x4B
 #define RIGHT_KEY 0x4D
-#define ESCAPE 0
 
+#define I_KEY 0x17
+#define J_KEY 0x24
+#define K_KEY 0x25
+#define L_KEY 0x26
 
 static int area[AREAY][AREAX];
 
