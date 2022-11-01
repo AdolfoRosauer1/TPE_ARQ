@@ -14,7 +14,9 @@ void printHelp(int mode)
         print("printmem -- makes a memory dump on screen of a 32 bytes section of memory starting by the address passed as an argument.\n");
         print("time -- prints the day and hour in the format: hh:mm-dd/mm/yyyy.\n");
         print("primos -- prints prime numbers until stopped. Starting from the number 1.\n");
-        print("fibonacci -- prints the fibonacci series starting with 1\n");
+        print("font -- clears the screen and changes the font size. Admits the arguments: small, normal, large\n");
+        print("tron -- Starts the Tron game\n");
+        // print("fibonacci -- prints the fibonacci series starting with 1\n");
         // print("com1 | com2 -- the use of the | caracter divides the screen in half \n and executes each command on the respective part of the screen.\n");
         print("exit -- exits the program\n");
         print("Use ESC to exit fibonacci or primos program\n");
