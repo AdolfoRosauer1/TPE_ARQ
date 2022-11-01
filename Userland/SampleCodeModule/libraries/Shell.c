@@ -14,6 +14,7 @@ void invalidOpCode()
 
 void start_shell()
 {
+    intro_audio();
     clear();
     print("Welcome to BocaOS");
     putChar('\n');

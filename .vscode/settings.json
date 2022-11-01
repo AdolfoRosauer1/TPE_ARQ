@@ -10,6 +10,8 @@
         "fibonacci.h": "c",
         "interrupts.h": "c",
         "naiveconsole.h": "c",
-        "tron.h": "c"
+        "tron.h": "c",
+        "shell.h": "c",
+        "system_calls.h": "c"
     }
 }

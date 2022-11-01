@@ -29,3 +29,17 @@ From the project directory run:
 
   user@linux:$ ./run.sh
 
+En caso de no funcionar apropiadamente el audio en el sistema operativo debido a errores en los parametros del qemu
+pruebe cambiar dentro de run.sh el parametro
+  -soundhw pcspk
+y reemplazarlo por
+  -audiodev <driver>,id=audio0 -machine pcspk-audiodev=audio0
+donde driver hace referencia al controlador de sonido adecuado para la configuracion de sistema utilizada
+las opciones tipicas recomendadas son:
+  coreaudio (Mac)
+  dsound,pa (Windows)
+  sld,alsa (Linux)
+aunque puede ser que su configuracion utilice un driver que no este presente en la lista
+para mas informacion recomendamos leer la documentacion de qemu en: https://qemu.readthedocs.io/en/latest/system/qemu-manpage.html
+
+

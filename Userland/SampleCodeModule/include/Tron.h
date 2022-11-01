@@ -1,3 +1,4 @@
+#include <audio.h>
 #include <Utils.h>
 #include <system_calls.h>
 

@@ -46,14 +46,7 @@ void start_tron()
             // update_tron devuelve la win condition win=update_tron
         }
         //play music
-        beep(246,250);
-        beep(220,125);
-        beep(196,250);
-        beep(261,250);
-        beep(246,250);
-        beep(293,250);
-        beep(220,250);
-        beep(196,250);
+        tron_audio();
         while (c != ESCAPE && c != ENTER)
         {
             // poner winner message

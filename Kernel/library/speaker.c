@@ -21,14 +21,15 @@ void play_sound(uint32_t nFrequence)
     }
 }
 
-void set_pit_count(unsigned count) {
-	// Disable interrupts
-	_cli();
- 
-	// Set low byte
-	outb(0x40,count&0xFF);		// Low byte
-	outb(0x40,(count&0xFF00)>>8);	// High byte
-	return;
+void set_pit_count(unsigned count)
+{
+    // Disable interrupts
+    _cli();
+
+    // Set low byte
+    outb(0x40, count & 0xFF);          // Low byte
+    outb(0x40, (count & 0xFF00) >> 8); // High byte
+    return;
 }
 
 // make it shutup
@@ -39,8 +40,16 @@ void nosound()
     outb(0x61, tmp);
 }
 
-void beep(int nFrequence, int time){
-    play_sound(nFrequence);
-    wait(time);
+void beep(int nFrequence, int time)
+{
+    if (nFrequence == 0)
+    {
+        wait(time);
+    }
+    else
+    {
+        play_sound(nFrequence);
+        wait(time);
+    }
     nosound();
 }

@@ -7,6 +7,7 @@
 #include <Fibonacci.h>
 #include <Primos.h>
 #include <Tron.h>
+#include <audio.h>
 
 #define MAX_SIZE 50
 
