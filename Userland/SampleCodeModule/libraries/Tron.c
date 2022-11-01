@@ -30,7 +30,7 @@ void start_tron()
             printPos("                             ", WIDTH * 3 / 8, 1 + HEIGHT * 7 / 8);
             system_call(POLL_READ, KBD_IN, &c, 1, 250, 0); // KBD_IN es 1
         }
-        printPos("                             ", WIDTH * 3 / 8, 1 + HEIGHT * 7 / 8);
+        printPos("PLAYER 1 KEYES: W A S D, PLAYER 2 KEYES: I J K L", WIDTH * 3 / 8, 1 + HEIGHT * 7 / 8);
         initialize_players();
         while (!winner)
         {
@@ -67,7 +67,7 @@ void start_tron()
             printPos("GAME OVER. PRESS ENTER TO RESTART GAME, OR PRESS ESC TO LEAVE.", WIDTH * 3 / 8, 1 + HEIGHT * 7 / 8);
             system_call(POLL_READ, KBD_IN, &c, 1, 500, 0);
             printPos("                                                              ", WIDTH * 3 / 8, 1 + HEIGHT * 7 / 8);
-            system_call(POLL_READ, KBD_IN, &c, 1, 250, 0); // KBD_IN es 1
+            system_call(POLL_READ, KBD_IN, &c, 1, 250, 0);
         }
         if (c == ESCAPE)
             running = 0;
